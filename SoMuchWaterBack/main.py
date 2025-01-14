@@ -41,7 +41,7 @@ def create_product(waterprint: WaterPrint, session:SessionDep) -> WaterPrint:
     return waterprint
 
 @app.get("/waterprint/")
-def read_products(session: Session, offset: int = 0,limit: Annotated[int, Query(le=100)] = 100) -> list[WaterPrint]:
+def read_products(session: SessionDep, offset: int = 0,limit: Annotated[int, Query(le=100)] = 100) -> list[WaterPrint]:
     waterprints = session.exec(select(WaterPrint).offset(offset).limit(limit)).all()
     return waterprints
 
