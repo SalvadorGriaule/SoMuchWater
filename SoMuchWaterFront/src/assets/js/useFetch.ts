@@ -1,8 +1,8 @@
-import { ref, watchEffect, toValue} from 'vue'
+import { ref, watchEffect, toValue, type Ref} from 'vue'
 
 export const useFetch = (url:string) => {
     const data = ref(null);
-    const error = ref(null);
+    const error:Ref<unknown|null> = ref(null);
 
     watchEffect(async () => {
         data.value = null;
@@ -19,4 +19,13 @@ export const useFetch = (url:string) => {
     })
 
     return { data, error}
+}
+
+export const jsonFetch = async(url:string,data:Object) => {    
+    try{
+        const resp = await fetch(url,{mode:"cors" ,method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)
+    });
+    } catch(e) {
+        console.log(e);
+    }
 }

@@ -1,11 +1,12 @@
 from typing import Annotated
 
 from fastapi import FastAPI, Depends , HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Field, Session , SQLModel, create_engine, select
 
 class  WaterPrint(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    product: str = Field(index=True)
+    name: str = Field(index=True)
     water_print: int = Field(default=None, index=True)
 
 sqlite_file_name = "database.db"
@@ -24,6 +25,20 @@ def get_session():
 SessionDep = Annotated[Session, Depends(get_session)]
 
 app = FastAPI()
+
+origins = {
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:5173"
+}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 def on_startup():
