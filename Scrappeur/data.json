@@ -1,0 +1,544 @@
+{
+    "data": [
+        {
+            "name": "Apples ",
+            "litre": 93,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Apples, dried",
+            "litre": 778,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Apricots",
+            "litre": 146,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Apricots, dried",
+            "litre": 504,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Bananas",
+            "litre": 90,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Blackberries",
+            "litre": 47,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Blueberries",
+            "litre": 96,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cantaloupe and other melons",
+            "litre": 25,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cherries",
+            "litre": 182,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cranberries",
+            "litre": 31,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Dates",
+            "litre": 259,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Figs",
+            "litre": 372,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Grapes",
+            "litre": 69,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Grapefruit",
+            "litre": 58,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Guava",
+            "litre": 204,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Kiwifruit",
+            "litre": 58,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Lemons",
+            "litre": 73,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Limes",
+            "litre": 73,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Mangoes",
+            "litre": 204,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Tangerines, Mandarins and Clementines",
+            "litre": 85,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Oranges",
+            "litre": 64,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Papaya",
+            "litre": 58,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Peaches and Nectarines",
+            "litre": 103,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Plums",
+            "litre": 248,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Prunes (dried plums)",
+            "litre": 708,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pears",
+            "litre": 105,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pineapples",
+            "litre": 29,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Plantains",
+            "litre": 182,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Raisins",
+            "litre": 276,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Raspberries",
+            "litre": 47,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Strawberries",
+            "litre": 39,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Watermelons",
+            "litre": 27,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Artichokes",
+            "litre": 93,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Asparagus",
+            "litre": 244,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Avocados",
+            "litre": 133,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Broccoli",
+            "litre": 32,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Brussels sprouts",
+            "litre": 32,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cabbage",
+            "litre": 32,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Carrots",
+            "litre": 22,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cauliflower",
+            "litre": 32,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Celery",
+            "litre": 22,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Corn, sweet",
+            "litre": 139,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cucumbers",
+            "litre": 40,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Eggplants",
+            "litre": 41,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Garlic",
+            "litre": 67,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Lettuce",
+            "litre": 27,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Kale",
+            "litre": 32,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Kohlrabi",
+            "litre": 32,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Onions",
+            "litre": 31,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Okra",
+            "litre": 65,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Peas, fresh",
+            "litre": 149,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Peppers, chile and sweet",
+            "litre": 43,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Potatoes",
+            "litre": 33,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pumpkins",
+            "litre": 38,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Edamame (soybeans)",
+            "litre": 244,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Spinach",
+            "litre": 33,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "String beans (green beans)",
+            "litre": 62,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Squash",
+            "litre": 38,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Sweet potatoes",
+            "litre": 44,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Taro",
+            "litre": 69,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Tomatoes",
+            "litre": 24,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Turnips",
+            "litre": 22,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Almonds",
+            "litre": 1829,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cashews",
+            "litre": 1615,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Chestnuts",
+            "litre": 312,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Hazelnuts",
+            "litre": 1195,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Olives",
+            "litre": 342,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Peanuts",
+            "litre": 449,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pistachios",
+            "litre": 1291,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Walnuts",
+            "litre": 1055,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Corn flour",
+            "litre": 142,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Oatmeal",
+            "litre": 288,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Quinoa",
+            "litre": 513,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Rice, brown",
+            "litre": 247,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Rice, white",
+            "litre": 274,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Wheat flour",
+            "litre": 210,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pigeon peas",
+            "litre": 203,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Fava beans (broad, faba)",
+            "litre": 75,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Chickpeas (garbanzo beans)",
+            "litre": 154,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cowpeas (black-eyed peas)",
+            "litre": 255,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Beans, dry (pinto, white, red, black, kidney, lima)",
+            "litre": 187,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Lentils",
+            "litre": 217,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Beef",
+            "litre": 1751,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Chicken",
+            "litre": 492,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Eggs, chicken",
+            "litre": 186,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Goat",
+            "litre": 627,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Lamb and mutton",
+            "litre": 1183,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pork and bacon",
+            "litre": 680,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Turkey",
+            "litre": 492,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pizza, sauce and cheese",
+            "litre": 201,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Soy burger",
+            "litre": 428,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Tofu",
+            "litre": 287,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Yogurt",
+            "litre": 134,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Butter",
+            "litre": 631,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Cheese, cow's milk",
+            "litre": 361,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Chocolate",
+            "litre": 1954,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Bread ",
+            "litre": 183,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Pasta",
+            "litre": 210,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Potato chips (crisps)",
+            "litre": 118,
+            "portion": "4 ounces"
+        },
+        {
+            "name": "Apple juice",
+            "litre": 270,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Beer",
+            "litre": 70,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Coffee",
+            "litre": 250,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Milk",
+            "litre": 242,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Orange juice",
+            "litre": 242,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Soft drink (soda, pop - sugar sweetened)",
+            "litre": 207,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Soy milk",
+            "litre": 70,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Tea",
+            "litre": 26,
+            "portion": "8 fluid ounces"
+        },
+        {
+            "name": "Wine",
+            "litre": 132,
+            "portion": "5 fluid ounces "
+        }
+    ]
+}
