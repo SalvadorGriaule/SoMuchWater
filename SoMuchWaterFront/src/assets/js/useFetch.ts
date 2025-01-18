@@ -21,11 +21,13 @@ export const useFetch = (url:string) => {
     return { data, error}
 }
 
-export const jsonFetch = async(url:string,data:Object) => {    
+export const jsonFetch = async(url:string,data:Object) => {
+
     try{
-        const resp = await fetch(url,{mode:"cors" ,method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)
-    });
+        const resp = await fetch(url,{mode:"cors" ,method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)})
+        let json = await resp.json()
+        return json
     } catch(e) {
-        console.log(e);
+        return e
     }
 }

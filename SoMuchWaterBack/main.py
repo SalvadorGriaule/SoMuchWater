@@ -1,12 +1,14 @@
 from typing import Annotated
 
+
 from fastapi import FastAPI, Depends , HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from sqlmodel import Field, Session , SQLModel, create_engine, select
+from sqlmodel import Field, Session ,func , SQLModel, create_engine, select
 
 class  WaterPrint(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
+    quantité: str = Field(index=True)
     water_print: int = Field(default=None, index=True)
 
 sqlite_file_name = "database.db"
@@ -21,6 +23,16 @@ def create_db_and_tables():
 def get_session():
     with Session(engine) as session:
         yield session
+
+def name_exists(name:str) -> bool:
+    with Session(engine) as session:
+        statm = select(func.count()).select_from(WaterPrint).where(WaterPrint.name == name)
+        result = session.exec(statm).one()
+        if result > 0:
+            return False
+        else:
+            return True
+
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
@@ -49,11 +61,14 @@ async def root():
     return {"message": "Hello World"}
 
 @app.post("/waterprint/")
-def create_product(waterprint: WaterPrint, session:SessionDep) -> WaterPrint:
-    session.add(waterprint)
-    session.commit()
-    session.refresh(waterprint)
-    return waterprint
+def create_product(waterprint: WaterPrint, session:SessionDep):
+    if name_exists(waterprint.name):
+        session.add(waterprint)
+        session.commit()
+        session.refresh(waterprint)
+        return waterprint
+    else:
+        return {"error":"Ce produit exists déjà"}
 
 @app.get("/waterprint/")
 def read_products(session: SessionDep, offset: int = 0,limit: Annotated[int, Query(le=100)] = 100) -> list[WaterPrint]:
