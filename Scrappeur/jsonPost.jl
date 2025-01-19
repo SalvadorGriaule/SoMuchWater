@@ -15,7 +15,8 @@ if length(ARGS) == 1
         data = get(json_data,"data","undefined")
         for elem in data
             postWP = Waterprint(get(elem,"name","undefined"),get(elem,"portion","undefined"),get(elem,"litre",0))
-            println(postWP)
+            resp = HTTP.post("http://127.0.0.1:8000/waterprint/"; body=JSON.json( Dict("name" => postWP.name, "water_print" => postWP.litre, "quantité" => postWP.portion)))
+            println(postWP,resp)
         end
     end
 end
