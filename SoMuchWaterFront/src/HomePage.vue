@@ -10,15 +10,11 @@ const route = useRoute();
 const { data, error } = useFetch("http://127.0.0.1:8000/waterprint/")
 let mainSelect = ref('')
 let mainSelect2 = ref('')
-let quotient = ref(0)
 
 const compareWP = computed(() => {
     if (mainSelect.value != "" && mainSelect2.value != "") {
         let { data: select, error: sError } = useFetch("http://127.0.0.1:8000/waterprint/" + mainSelect.value)
-        let { data: select2, error: selEr2 } = useFetch("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)
-        // if(select.value && select2.value) quotient.value = select.value.water_print / select2.value.water_print
-        console.log(typeof select);
-        
+        let { data: select2, error: selEr2 } = useFetch("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)   
         return { select, select2}
     }
 })
@@ -34,7 +30,7 @@ const compareWP = computed(() => {
             <SelectItem :tab="data" @selected="(e) => mainSelect2 = e" />
         </form>
         <div v-if="compareWP">
-            <p>{{ compareWP.select.value.quantité }} {{ compareWP.select.value.name }} vaut {{ quotient }} de {{ compareWP.select2.value.quantité }} de {{ compareWP.select2.value.name }}</p>
+            <p class="text-center my-1">{{ compareWP.select.value.quantité }} {{ compareWP.select.value.name }} vaut {{ compareWP.select.value.water_print / compareWP.select2.value.water_print }} de {{ compareWP.select2.value.quantité }} de {{ compareWP.select2.value.name }}</p>
         </div>
     </section>
     <section>
