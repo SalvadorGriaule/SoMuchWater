@@ -25,10 +25,11 @@ if length(ARGS) == 2
                     if !isempty(collect(content))
                         println("plus de 0 mais ",length(collect(content)))
                         try
-                            write(data,content[1].children[1])
+                            write(data,nodeText(content[1]))
+                            write(data,"\n")
                         catch e
                             println("error in write ",e)
-                            println("str? :",content[1].children[1])
+                            println("str? :",content[1])
                         end
                     end
                     for elem in PreOrderDFS(body)
