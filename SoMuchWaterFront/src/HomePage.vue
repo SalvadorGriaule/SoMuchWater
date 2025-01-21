@@ -14,8 +14,8 @@ let mainSelect2 = ref('')
 const compareWP = computed(() => {
     if (mainSelect.value != "" && mainSelect2.value != "") {
         let { data: select, error: sError } = useFetch("http://127.0.0.1:8000/waterprint/" + mainSelect.value)
-        let { data: select2, error: selEr2 } = useFetch("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)   
-        return { select, select2}
+        let { data: select2, error: selEr2 } = useFetch("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)
+        return { select, select2 }
     }
 })
 
@@ -30,13 +30,17 @@ const compareWP = computed(() => {
             <SelectItem :tab="data" @selected="(e) => mainSelect2 = e" />
         </form>
         <div v-if="compareWP">
-            <p class="text-center my-1">{{ compareWP.select.value.quantité }} {{ compareWP.select.value.name }} vaut {{ compareWP.select.value.water_print / compareWP.select2.value.water_print }} de {{ compareWP.select2.value.quantité }} de {{ compareWP.select2.value.name }}</p>
+            <p class="text-center my-1">{{ compareWP.select.value.quantité }} {{ compareWP.select.value.name }} vaut {{
+                compareWP.select.value.water_print / compareWP.select2.value.water_print }} de {{
+                    compareWP.select2.value.quantité }} de {{ compareWP.select2.value.name }}</p>
         </div>
     </section>
     <section>
         <ul>
-            <li v-for="(elem) in data">
-                {{ elem.name }} consomme {{ elem.water_print }} Litre d'eau pour {{ elem.quantité }} produit
+            <li v-for="(elem, index) in data">
+                <p class="text-center p-1" :class="(index % 2 == 0 ? 'bg-blue-300' : 'bg-blue-400')">
+                    {{ elem.name }} consomme {{ elem.water_print }} Litre d'eau pour {{ elem.quantité }} produit
+                </p>
             </li>
         </ul>
     </section>

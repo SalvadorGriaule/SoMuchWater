@@ -1,44 +1,44 @@
 {
     "data": [
         {
-            "Appliance/Device": "Toilet",
-            "Percent of Total": "33 gallons",
-            "Household per Day": "24%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "United States",
+            "SECTOR": "322",
+            "PERCENT OF TOTAL WITHDRAWALS": "100"
         },
         {
-            "Appliance/Device": "Shower",
-            "Percent of Total": "27 gallons",
-            "Household per Day": "20%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Thermoelectric",
+            "SECTOR": "133",
+            "PERCENT OF TOTAL WITHDRAWALS": "41.3"
         },
         {
-            "Appliance/Device": "Faucet",
-            "Percent of Total": "27 gallons",
-            "Household per Day": "20%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Irrigation",
+            "SECTOR": "118",
+            "PERCENT OF TOTAL WITHDRAWALS": "36.6"
         },
         {
-            "Appliance/Device": "Washing Machine",
-            "Percent of Total": "22 gallons",
-            "Household per Day": "16%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Public Supply",
+            "SECTOR": "39",
+            "PERCENT OF TOTAL WITHDRAWALS": "12.1"
         },
         {
-            "Appliance/Device": "Leaks",
-            "Percent of Total": "18 gallons",
-            "Household per Day": "13%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Self-Supplied Industrial",
+            "SECTOR": "14.8",
+            "PERCENT OF TOTAL WITHDRAWALS": "4.6"
         },
         {
-            "Appliance/Device": "Bath",
-            "Percent of Total": "4 gallons",
-            "Household per Day": "3%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Aquaculture",
+            "SECTOR": "7.55",
+            "PERCENT OF TOTAL WITHDRAWALS": "2.3"
         },
         {
-            "Appliance/Device": "Dishwasher",
-            "Percent of Total": "2 gallons",
-            "Household per Day": "2%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Mining",
+            "SECTOR": "4",
+            "PERCENT OF TOTAL WITHDRAWALS": "1"
         },
         {
-            "Appliance/Device": "Other",
-            "Percent of Total": "4 gallons",
-            "Household per Day": "3%"
+            "TOTAL WITHDRAWALS (billion gallons per day)": "Self-Supply Domestic (e.g., home water wells)",
+            "SECTOR": "3.26",
+            "PERCENT OF TOTAL WITHDRAWALS": "1"
         }
     ]
 }

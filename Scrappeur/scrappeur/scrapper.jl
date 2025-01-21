@@ -37,13 +37,13 @@ if length(ARGS) == 2
                                     println(elem.text)
                                 elseif typeof(elem) <: HTMLElement
                                     println(tag(elem))
-                                    if tag(elem) == :tr && (trFirst == 0 || trFirst == 1)
+                                    if (tag(elem) == :tr) && (trFirst == 0 || trFirst == 1)
                                         trFirst += 1
                                     elseif tag(elem) == :tr && trFirst > 1
                                         push!(tableHTML, tableTd)
                                         tableTd = Dict()
                                         currentKey = 1
-                                    elseif tag(elem) == :td && trFirst == 1
+                                    elseif (tag(elem) == :td || tag(elem) == :th) && trFirst == 1
                                         tableTd[nodeText(elem)] = ""
                                         arrayKey = [keys(tableTd)...]
                                         println(arrayKey)

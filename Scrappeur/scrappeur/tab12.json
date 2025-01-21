@@ -1,34 +1,44 @@
 {
     "data": [
         {
-            "Steak (beef)": "Hamburger",
-            "6 ounces": "1 (includes bread, meat, lettuce, tomato)",
-            "674 gallons": "660 gallons"
+            "Appliance/Device": "Toilet",
+            "Percent of Total": "33 gallons",
+            "Household per Day": "24%"
         },
         {
-            "Steak (beef)": "Ham (pork)",
-            "6 ounces": "3 ounces",
-            "674 gallons": "135 gallons"
+            "Appliance/Device": "Shower",
+            "Percent of Total": "27 gallons",
+            "Household per Day": "20%"
         },
         {
-            "Steak (beef)": "Eggs",
-            "6 ounces": "1 egg",
-            "674 gallons": "52 gallons"
+            "Appliance/Device": "Faucet",
+            "Percent of Total": "27 gallons",
+            "Household per Day": "20%"
         },
         {
-            "Steak (beef)": "Soda",
-            "6 ounces": "17 ounces",
-            "674 gallons": "46 gallons"
+            "Appliance/Device": "Washing Machine",
+            "Percent of Total": "22 gallons",
+            "Household per Day": "16%"
         },
         {
-            "Steak (beef)": "Coffee",
-            "6 ounces": "1 cup",
-            "674 gallons": "34 gallons"
+            "Appliance/Device": "Leaks",
+            "Percent of Total": "18 gallons",
+            "Household per Day": "13%"
         },
         {
-            "Steak (beef)": "Wine",
-            "6 ounces": "1 glass",
-            "674 gallons": "34 gallons"
+            "Appliance/Device": "Bath",
+            "Percent of Total": "4 gallons",
+            "Household per Day": "3%"
+        },
+        {
+            "Appliance/Device": "Dishwasher",
+            "Percent of Total": "2 gallons",
+            "Household per Day": "2%"
+        },
+        {
+            "Appliance/Device": "Other",
+            "Percent of Total": "4 gallons",
+            "Household per Day": "3%"
         }
     ]
 }

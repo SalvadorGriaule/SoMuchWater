@@ -14,7 +14,14 @@ if length(ARGS) == 1
         json_data = JSON.parse(text)
         data = get(json_data,"data","undefined")
         for elem in data
-            postWP = Waterprint(get(elem,"name","undefined"),get(elem,"portion","undefined"),get(elem,"litre",0))
+            if typeof(get(elem,"Water Footprint","undefined")) <: String
+                numLitre = replace(SubString(get(elem,"Water Footprint","undefined"),findfirst('(',get(elem,"Water Footprint","undefined")))," liters" => "", "," => "", "(" => "", ")" => "")
+                println(numLitre)
+                postWP = Waterprint(get(elem,"Item","undefined"),"1",parse(Int64,numLitre))
+            else
+                postWP = Waterprint(get(elem,"name","undefined"),get(elem,"portion","undefined"),get(elem,"litre",0))
+            end
+            
             resp = HTTP.post("http://127.0.0.1:8000/waterprint/"; body=JSON.json( Dict("name" => postWP.name, "water_print" => postWP.litre, "quantité" => postWP.portion)))
             println(postWP,resp)
         end

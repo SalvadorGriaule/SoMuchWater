@@ -1,8 +1,8 @@
 from typing import Annotated
 
-
 from fastapi import FastAPI, Depends , HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Field, Session ,func , SQLModel, create_engine, select
 
 class  WaterPrint(SQLModel, table=True):
@@ -10,6 +10,11 @@ class  WaterPrint(SQLModel, table=True):
     name: str = Field(index=True)
     quantité: str = Field(index=True)
     water_print: int = Field(default=None, index=True)
+
+class Admin(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    admin: str = Field(index=True)
+    password: str = Field(index=True)
 
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
@@ -38,6 +43,8 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 app = FastAPI()
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 origins = {
     "http://localhost",
     "http://localhost:8080",
@@ -60,6 +67,14 @@ def on_startup():
 async def root():
     return {"message": "Hello World"}
 
+#  Parti Admin
+
+@app.get("/login/")
+async def login(token: Annotated[str, Depends(oauth2_scheme)]):
+    return {"token": token}
+
+#  gestion base de donnée
+
 @app.post("/waterprint/")
 def create_product(waterprint: WaterPrint, session:SessionDep):
     if name_exists(waterprint.name):
@@ -71,8 +86,8 @@ def create_product(waterprint: WaterPrint, session:SessionDep):
         return {"error":"Ce produit exists déjà"}
 
 @app.get("/waterprint/")
-def read_products(session: SessionDep, offset: int = 0,limit: Annotated[int, Query(le=100)] = 100) -> list[WaterPrint]:
-    waterprints = session.exec(select(WaterPrint).offset(offset).limit(limit)).all()
+def read_products(session: SessionDep) -> list[WaterPrint]:
+    waterprints = session.exec(select(WaterPrint)).all()
     return waterprints
 
 @app.get("/waterprint/{waterprint_id}")

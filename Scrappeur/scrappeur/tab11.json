@@ -1,3 +1,24 @@
 {
-    "data": []
+    "data": [
+        {
+            "Source (individual or organization)": "441",
+            "Gallons of Water": "Jim Oltjen et al. 1993. “Estimation of the water requirement for beef production in the United States.” Journal of Animal Science. (UC-Davis professor at the behest of National Cattlemen’s Beef Association)"
+        },
+        {
+            "Source (individual or organization)": "840",
+            "Gallons of Water": "Alan Durning. 1991. “Taking Stock: Animal Farming and the Environment.” Worldwatch Paper #103. (Calculations based on Oltjen’s figures.)"
+        },
+        {
+            "Source (individual or organization)": "1,799",
+            "Gallons of Water": "Mekonnen and Hoekstra. 2010. “The green, blue and grey water footprint of farm animals and animal products.” Water Footprint Network."
+        },
+        {
+            "Source (individual or organization)": "2,464",
+            "Gallons of Water": "Marcia Kreith. 1991. “Water inputs in California food production.” Water Education Foundation."
+        },
+        {
+            "Source (individual or organization)": "5,214",
+            "Gallons of Water": "Herb Schulbach et al. 1978. Soil and Water. no. 38, fall 1978."
+        }
+    ]
 }
