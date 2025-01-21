@@ -1,5 +1,6 @@
 import HTTP
 using Gumbo, Cascadia, AbstractTrees
+
 if length(ARGS) == 2
     rx = r"[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}(\S*)?"
     if !isnothing(match(rx, ARGS[1]))
@@ -21,15 +22,34 @@ if length(ARGS) == 2
                     r_parsed = parsehtml(String(r.body))
                     body = r_parsed.root[2]
                     content = eachmatch(select,body)
-                    println("match with ", content)
+                    # println("match with ", content)
                     if !isempty(collect(content))
                         println("plus de 0 mais ",length(collect(content)))
                         try
-                            write(data,nodeText(content[1]))
-                            write(data,"\n")
+                            tableHTML::Array{Array} = []
+                            tableTd::Array{String} = []
+                            for elem in PreOrderDFS(content[1].children)
+                                println(typeof(elem))
+                                if typeof(elem) <: HTMLText
+                                    println(elem.text)
+                                elseif typeof(elem) <: HTMLElement
+                                    println(tag(elem))
+                                    if tag(elem) == :tr
+                                        if length(tableTd) != 0
+                                            push!(tableHTML,tableTd)
+                                            tableTd = []
+                                        end
+                                    elseif tag(elem) == :td
+                                        push!(tableTd,nodeText(elem))
+                                        println(tableTd)
+                                    end
+                                end
+                            end
+                            println(tableHTML)
+                            # write(data,nodeText(content[1]))
+                            # write(data,"\n")
                         catch e
                             println("error in write ",e)
-                            println("str? :",content[1])
                         end
                     end
                     for elem in PreOrderDFS(body)
