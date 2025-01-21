@@ -1,0 +1,39 @@
+{
+    "data": [
+        {
+            "Food Item ": "Steak (beef) ",
+            "Serving Size ": "6 ounces ",
+            "Water Footprint": "674 gallons"
+        },
+        {
+            "Food Item ": "Hamburger ",
+            "Serving Size ": "1 (includes bread, meat, lettuce, tomato) ",
+            "Water Footprint": "660 gallons"
+        },
+        {
+            "Food Item ": "Ham (pork) ",
+            "Serving Size ": "3 ounces ",
+            "Water Footprint": "135 gallons"
+        },
+        {
+            "Food Item ": "Eggs ",
+            "Serving Size ": "1 egg ",
+            "Water Footprint": "52 gallons"
+        },
+        {
+            "Food Item ": "Soda ",
+            "Serving Size ": "17 ounces",
+            "Water Footprint": "46 gallons"
+        },
+        {
+            "Food Item ": "Coffee ",
+            "Serving Size ": "1 cup",
+            "Water Footprint": "34 gallons"
+        },
+        {
+            "Food Item ": "Wine ",
+            "Serving Size ": "1 glass",
+            "Water Footprint": "34 gallons"
+        }
+    ]
+}

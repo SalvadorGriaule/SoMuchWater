@@ -1,0 +1,72 @@
+{
+    "data": [
+        {
+            "Water Usage (gallons/person/day)": "United Arab Emirates (UAE)",
+            "Country": "2,270"
+        },
+        {
+            "Water Usage (gallons/person/day)": "United States of America (USA)",
+            "Country": "2,200"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Canada",
+            "Country": "1,687"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Israel",
+            "Country": "1,687"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Botswana",
+            "Country": "1,485"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Brazil",
+            "Country": "1,466"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Russian Federation",
+            "Country": "1,341"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Denmark",
+            "Country": "1,183"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Australia",
+            "Country": "1,156"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Germany",
+            "Country": "1,032"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Dominican Republic",
+            "Country": "1,014"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Global",
+            "Country": "1,002"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Colombia",
+            "Country": "995"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Egypt",
+            "Country": "971"
+        },
+        {
+            "Water Usage (gallons/person/day)": "United Kingdom",
+            "Country": "910"
+        },
+        {
+            "Water Usage (gallons/person/day)": "Republic of South Africa",
+            "Country": "908"
+        },
+        {
+            "Water Usage (gallons/person/day)": "China",
+            "Country": "775"
+        }
+    ]
+}

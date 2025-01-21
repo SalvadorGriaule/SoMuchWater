@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+            "Appliance/Device": "Toilet",
+            "Percent of Total": "33 gallons",
+            "Household per Day": "24%"
+        },
+        {
+            "Appliance/Device": "Shower",
+            "Percent of Total": "27 gallons",
+            "Household per Day": "20%"
+        },
+        {
+            "Appliance/Device": "Faucet",
+            "Percent of Total": "27 gallons",
+            "Household per Day": "20%"
+        },
+        {
+            "Appliance/Device": "Washing Machine",
+            "Percent of Total": "22 gallons",
+            "Household per Day": "16%"
+        },
+        {
+            "Appliance/Device": "Leaks",
+            "Percent of Total": "18 gallons",
+            "Household per Day": "13%"
+        },
+        {
+            "Appliance/Device": "Bath",
+            "Percent of Total": "4 gallons",
+            "Household per Day": "3%"
+        },
+        {
+            "Appliance/Device": "Dishwasher",
+            "Percent of Total": "2 gallons",
+            "Household per Day": "2%"
+        },
+        {
+            "Appliance/Device": "Other",
+            "Percent of Total": "4 gallons",
+            "Household per Day": "3%"
+        }
+    ]
+}

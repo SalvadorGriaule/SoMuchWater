@@ -1,0 +1,34 @@
+{
+    "data": [
+        {
+            "Steak (beef)": "Hamburger",
+            "6 ounces": "1 (includes bread, meat, lettuce, tomato)",
+            "674 gallons": "660 gallons"
+        },
+        {
+            "Steak (beef)": "Ham (pork)",
+            "6 ounces": "3 ounces",
+            "674 gallons": "135 gallons"
+        },
+        {
+            "Steak (beef)": "Eggs",
+            "6 ounces": "1 egg",
+            "674 gallons": "52 gallons"
+        },
+        {
+            "Steak (beef)": "Soda",
+            "6 ounces": "17 ounces",
+            "674 gallons": "46 gallons"
+        },
+        {
+            "Steak (beef)": "Coffee",
+            "6 ounces": "1 cup",
+            "674 gallons": "34 gallons"
+        },
+        {
+            "Steak (beef)": "Wine",
+            "6 ounces": "1 glass",
+            "674 gallons": "34 gallons"
+        }
+    ]
+}
