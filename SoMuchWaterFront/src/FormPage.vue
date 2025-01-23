@@ -13,7 +13,7 @@ let quantité: Ref<string> = ref("")
 let error: Ref<string> = ref("")
 let state: Ref<boolean> = ref(false);
 
-const sendData = async (e) => {
+const sendData = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     let json: Object = { name: toValue(name), water_print: toValue(waterprint), quantité: toValue(quantité) }
     let resp = await jsonFetch("http://127.0.0.1:8000/waterprint/", json)

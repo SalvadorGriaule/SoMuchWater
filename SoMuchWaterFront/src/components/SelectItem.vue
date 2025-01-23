@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 defineProps<{
-    tab?: Array<Object>
+    tab?: Array<Data>
 }>()
 defineEmits(["selected"])
 let selected = ref('')

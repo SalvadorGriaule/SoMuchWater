@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup >
 import { useFetch } from './assets/js/useFetch';
 import { useRoute, useRouter } from 'vue-router';
 import SelectItem from './components/SelectItem.vue'

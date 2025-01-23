@@ -49,6 +49,7 @@ origins = {
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:5173"
+    "file:///home/salvadorgriaule/Bureau/Projet%20Web/FastApi/SoMuchWater/SoMuchWaterFront/dist/index.html"
 }
 
 app.add_middleware(
