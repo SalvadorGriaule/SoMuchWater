@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import { useRoute, useRouter } from 'vue-router';
-import { jsonFetch } from './assets/js/useFetch';
-import { computed, ref, toValue, type Ref } from 'vue';
+import { jsonFetch } from './assets/ts/useFetch';
+import { ref, toValue, type Ref } from 'vue';
 
 const router = useRouter();
 const route = useRoute();

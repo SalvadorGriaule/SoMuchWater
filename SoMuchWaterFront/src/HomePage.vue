@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { arrData, uniData } from './assets/js/useFetch';
+import { arrData, uniData } from './assets/ts/useFetch';
 import { useRoute, useRouter } from 'vue-router';
 import SelectItem from './components/SelectItem.vue'
-import { computed, ref, toValue, watch, type Ref } from 'vue';
+import { computed, ref, watch, type Ref } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
