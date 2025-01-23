@@ -13,12 +13,22 @@ let select2:Ref<Data|null> = ref(null)
 let mainSelect = ref('')
 let mainSelect2 = ref('')
 
-const compareWP = computed(() => {
-    if (mainSelect.value != "" && mainSelect2.value != "") {
+watch(mainSelect, async() => {
+    if (mainSelect.value != "" ) {
         select = uniData("http://127.0.0.1:8000/waterprint/" + mainSelect.value)
+    }
+})
+
+watch(mainSelect2, async() => {
+    if (mainSelect2.value != "" ) {
         select2 = uniData("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)
     }
-    if(select.value != null && select2.value != null) return { select:select.value, select2:select2.value }
+})
+
+const compareWP = computed(() => {
+    if(mainSelect.value != "" && mainSelect2.value != "") {
+        if (select.value != null && select2.value != null) return { select:select.value, select2:select2.value }
+    }
 })
 
 </script>
