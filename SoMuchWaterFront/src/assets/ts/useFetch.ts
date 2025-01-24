@@ -1,6 +1,6 @@
 import { ref, watchEffect, toValue, type Ref, watch } from 'vue'
 
-export const arrData = (url: string): Ref<Data[]> | void => {
+const arrData = (url: string): Ref<Data[]> | void => {
     let resp: Ref<Data[]> = ref([])
 
     let { data: select, error: sError } = useFetch(url)
@@ -14,7 +14,7 @@ export const arrData = (url: string): Ref<Data[]> | void => {
     return resp
 }
 
-export const uniData = (url: string): Ref<Data> => {
+const uniData = (url: string): Ref<Data> => {
     let resp: Ref<Data> = ref({ id: 0, name: "", water_print: 0, quantité: "" })
 
     let { data: select, error: sError } = useFetch(url)
@@ -28,7 +28,7 @@ export const uniData = (url: string): Ref<Data> => {
     return resp
 }
 
-export const useFetch = (url: string) => {
+const useFetch = (url: string) => {
     const data: Ref<Data[] | Data | null> = ref(null);
     const error: Ref<unknown | null> = ref(null);
 
@@ -49,8 +49,7 @@ export const useFetch = (url: string) => {
     return { data, error }
 }
 
-export const jsonFetch = async (url: string, data: Object) => {
-
+const jsonFetch = async (url: string, data: Object) => {
     try {
         const resp = await fetch(url, { mode: "cors", method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
         let json = await resp.json()
@@ -59,3 +58,15 @@ export const jsonFetch = async (url: string, data: Object) => {
         return e
     }
 }
+
+const formFetch = async (url: string, form: FormData) => {
+    try {
+        const resp = await fetch(url,{ mode: "cors", method:"POST", body: form})
+        let json = await resp.json()
+        return json
+    } catch (e) {
+        return e
+    }
+}
+
+export {formFetch, jsonFetch, arrData, uniData}

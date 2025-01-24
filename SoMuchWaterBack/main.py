@@ -1,9 +1,18 @@
+from datetime import datetime, timedelta, timezone
 from typing import Annotated
+from contextlib import asynccontextmanager
 
+import jwt
 from fastapi import FastAPI, Depends , HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jwt.exceptions import IncalidTokenError
+from passlib.context import CryptContext
 from sqlmodel import Field, Session ,func , SQLModel, create_engine, select
+
+SECRET_KEY = "51e14729a14876cffb31272d914eb82e4e79f3112f15a0da5c89a1d7e42cbf12"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 class  WaterPrint(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -38,10 +47,13 @@ def name_exists(name:str) -> bool:
         else:
             return True
 
+@asynccontextmanager
+async def on_startup(app: FastAPI):
+    create_db_and_tables()
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
-app = FastAPI()
+app = FastAPI(lifespan=on_startup)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -60,9 +72,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-def on_startup():
-    create_db_and_tables()
 
 @app.get("/")
 async def root():
