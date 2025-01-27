@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from contextlib import asynccontextmanager
+import logging
 
 import jwt
-from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
@@ -34,7 +35,7 @@ class TokenData(BaseModel):
 
 class Admin(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    email: str = Field(index=True)
+    username: str = Field(index=True)
     password: str = Field(index=True)
 
 
@@ -80,15 +81,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-
-def connect_db_admin(session: SessionDep) -> list[Admin]:
-    adminDB = session.exec(select(Admin)).all()
-    return adminDB
-
-
-adminDB = connect_db_admin()
-
-
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -98,9 +90,12 @@ def get_password_hash(password):
 
 
 def get_admin(db, email: str):
-    if email in db:
-        user_dict = db[email]
-        return user_dict
+    with Session(engine) as session:
+        statm = select(Admin).where(Admin.username == email)
+        resp = session.exec(statm).all()
+        logger.info(resp)
+        if len(resp) == 1:
+            return resp[0]
 
 
 def authenticated_admin(db, email: str, password: str):
@@ -137,7 +132,7 @@ async def get_current_admin(token: Annotated[str, Depends(oauth2_scheme)]):
         token_data = TokenData(admin=email)
     except InvalidTokenError:
         raise credantials_exception
-    admin = get_admin(adminDB, email=token_data.email)
+    admin = get_admin(connect_db_admin(SessionDep), email=token_data.email)
     if admin is None:
         raise credantials_exception
     return admin
@@ -145,6 +140,8 @@ async def get_current_admin(token: Annotated[str, Depends(oauth2_scheme)]):
 
 app = FastAPI(lifespan=on_startup)
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 origins = {
     "http://localhost",
@@ -173,8 +170,10 @@ async def root():
 @app.post("/token")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    sesssion: SessionDep
 ) -> Token:
-    admin = authenticated_admin(adminDB, form_data.email, form_data.password)
+    adminDB = sesssion.exec(select(Admin)).all()
+    admin = authenticated_admin(adminDB, form_data.username, form_data.password)
     if not admin:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -183,7 +182,7 @@ async def login_for_access_token(
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": admin.email}, expires_delta=access_token_expires
+        data={"sub": admin.username}, expires_delta=access_token_expires
     )
     return Token(access_token=access_token, token_type="bearer")
 

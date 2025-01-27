@@ -3,9 +3,11 @@
 import { ref, toValue, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { formFetch } from './assets/ts/useFetch';
+import Cookies from 'universal-cookie';
 
 const router = useRouter();
 const route = useRoute();
+const cookies:Cookies = new Cookies(null, {path: '/'});
 
 let email: Ref<string> = ref("");
 let password: Ref<string> = ref("");
@@ -16,11 +18,16 @@ let state: Ref<boolean> = ref(false);
 const sendForm = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     let formData: FormData = new FormData()
-    formData.append("email", toValue(email))
+    formData.append("username", toValue(email))
     formData.append("password", toValue(password))
-    let send = await formFetch("http://127.0.0.1:8000/login/", formData);
-    error.value = send.error
+    let send = await formFetch("http://127.0.0.1:8000/token", formData);
+    error.value = send.detail
     state.value = true
+    if (!error.value) {
+        cookies.set("admin",send.access_token)
+        console.log(cookies.get("admin"))
+        router.push("/dashboard")
+    }
 }
 
 </script>
