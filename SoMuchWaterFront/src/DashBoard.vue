@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { isAdmin } from './assets/ts/guard';
 
-onBeforeMount(() => {
-    isAdmin()
-})
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
