@@ -93,7 +93,6 @@ def get_admin(db, email: str):
     with Session(engine) as session:
         statm = select(Admin).where(Admin.username == email)
         resp = session.exec(statm).all()
-        logger.info(resp)
         if len(resp) == 1:
             return resp[0]
 
@@ -132,12 +131,13 @@ async def get_current_admin(token: Annotated[str, Depends(oauth2_scheme)]):
         token_data = TokenData(admin=email)
     except InvalidTokenError:
         raise credantials_exception
-    admin = get_admin(connect_db_admin(SessionDep), email=token_data.email)
-    if admin is None:
-        raise credantials_exception
-    return admin
-
-
+    with Session(engine) as session:
+        adminDB = session.exec(select(Admin)).all()
+        admin = get_admin(adminDB, email=token_data.email)
+        if admin is None:
+            raise credantials_exception
+        return admin
+    
 app = FastAPI(lifespan=on_startup)
 
 logging.basicConfig(level=logging.INFO)
@@ -213,3 +213,7 @@ def read_product(waterprint_id: int, session: SessionDep):
     if not waterprint:
         raise HTTPException(status_code=404, detail="Waterprint not found")
     return waterprint
+
+@app.get("/admin/waterprint", response_model=Admin)
+async def admin_product(current_admin: Annotated[Admin, Depends(get_current_admin)]):
+    return current_admin

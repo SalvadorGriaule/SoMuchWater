@@ -14,7 +14,7 @@ if length(ARGS) == 1
         json_data = JSON.parse(text)
         data = get(json_data,"data","undefined")
         for elem in data
-            if typeof(get(elem,"Water Footprint","undefined")) <: String
+            if get(elem,"Water Footprint","undefined") != "undefined"
                 numLitre = replace(SubString(get(elem,"Water Footprint","undefined"),findfirst('(',get(elem,"Water Footprint","undefined")))," liters" => "", "," => "", "(" => "", ")" => "")
                 println(numLitre)
                 postWP = Waterprint(get(elem,"Item","undefined"),"1",parse(Int64,numLitre))
