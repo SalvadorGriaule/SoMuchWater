@@ -214,12 +214,14 @@ def read_product(waterprint_id: int, session: SessionDep):
         raise HTTPException(status_code=404, detail="Waterprint not found")
     return waterprint
 
-@app.post("/waterprint/update/{id}")
-def update_product(id:int, waterprint:WaterPrint, session:SessionDep):
-    statm = select(WaterPrint).where(WaterPrint.id == id)
+@app.patch("/waterprint/{waterprint_id}")
+def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep):
+    statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
     res = session.exec(statm)
     target = res.one()
-    target = waterprint
+    target.name = waterprint.name
+    target.water_print = waterprint.water_print
+    target.quantité = waterprint.quantité
     session.add(target)
     session.commit()
     session.refresh(target)

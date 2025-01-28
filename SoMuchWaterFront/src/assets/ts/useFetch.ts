@@ -59,6 +59,8 @@ const jsonFetch = async (url: string, data: Object) => {
     }
 }
 
+const jsonPatch = async(url: string, data: Object) => {}
+
 const formFetch = async (url: string, form: FormData) => {
     try {
         const resp = await fetch(url,{ mode: "cors", method:"POST", body: form})
