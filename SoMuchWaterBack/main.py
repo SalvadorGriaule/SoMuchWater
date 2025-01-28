@@ -214,6 +214,19 @@ def read_product(waterprint_id: int, session: SessionDep):
         raise HTTPException(status_code=404, detail="Waterprint not found")
     return waterprint
 
+@app.post("/waterprint/update/{id}")
+def update_product(id:int, waterprint:WaterPrint, session:SessionDep):
+    statm = select(WaterPrint).where(WaterPrint.id == id)
+    res = session.exec(statm)
+    target = res.one()
+    target = waterprint
+    session.add(target)
+    session.commit()
+    session.refresh(target)
+    return target
+
+
+
 @app.get("/admin/waterprint", response_model=Admin)
 async def admin_product(current_admin: Annotated[Admin, Depends(get_current_admin)]):
     return current_admin
