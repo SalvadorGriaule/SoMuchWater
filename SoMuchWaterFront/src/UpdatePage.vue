@@ -2,7 +2,7 @@
 
 import { ref, toValue, watch, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { jsonFetch, uniData } from './assets/ts/useFetch';
+import { jsonPatch, uniData } from './assets/ts/useFetch';
 
 const router = useRouter();
 const route = useRoute();
@@ -24,10 +24,10 @@ watch(data,() => {
 
 const sendData = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
-    let json: Object = { name: toValue(name), water_print: toValue(waterprint), quantité: toValue(quantité) }
+    let json: Object = { "name": toValue(name), "water_print": toValue(waterprint), "quantité": toValue(quantité) }
     console.log(json);
     
-    let resp = await jsonFetch("http://127.0.0.1:8000/waterprint/" + route.params.id, json)
+    let resp = await jsonPatch("http://127.0.0.1:8000/waterprint/" + route.params.id, json)
     error.value = resp.error
     state.value = true
 }

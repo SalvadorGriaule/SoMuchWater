@@ -146,7 +146,8 @@ logger = logging.getLogger(__name__)
 origins = {
     "http://localhost",
     "http://localhost:8080",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5174",
     "file:///home/salvadorgriaule/Bureau/Projet%20Web/FastApi/SoMuchWater/SoMuchWaterFront/dist/index.html",
 }
 
@@ -227,6 +228,14 @@ def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep)
     session.refresh(target)
     return target
 
+@app.delete("/waterprint/{waterprint_id}")
+def delete_product(waterprint_id: int, session: SessionDep):
+    statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
+    res = session.exec(statm)
+    target = res.one()
+    session.delete(target)
+    session.commit()
+    return target
 
 
 @app.get("/admin/waterprint", response_model=Admin)

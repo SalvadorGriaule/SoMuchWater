@@ -33,7 +33,7 @@ const sendForm = async (e: { preventDefault: () => void; }) => {
 </script>
 
 <template>
-    <div class="flex justify-center ">
+    <div class="flex items-center flex-col mt-2">
         <div v-if="state">
             <div v-if="error" class="p-2 mb-2 bg-red-400 border-red-600 border-solid border-2">
                 {{ error }}

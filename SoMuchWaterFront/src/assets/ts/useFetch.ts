@@ -59,7 +59,25 @@ const jsonFetch = async (url: string, data: Object) => {
     }
 }
 
-const jsonPatch = async(url: string, data: Object) => {}
+const deleteFetch = async (url:string) => {
+    try {
+        const resp = await fetch(url,{ mode: "cors", method:"DELETE", credentials:"same-origin"});
+        let json = await resp.json()
+        return json
+    } catch (e) {
+        return e
+    }
+}
+
+const jsonPatch = async(url: string, data: Object) => {
+    try {
+        const resp = await fetch(url, { mode: "cors", method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+        let json = await resp.json()
+        return json
+    } catch (e) {
+        return e
+    }
+}
 
 const formFetch = async (url: string, form: FormData) => {
     try {
@@ -71,4 +89,4 @@ const formFetch = async (url: string, form: FormData) => {
     }
 }
 
-export {formFetch, jsonFetch, arrData, uniData}
+export {formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData}
