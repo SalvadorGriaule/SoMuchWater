@@ -59,9 +59,9 @@ const jsonFetch = async (url: string, data: Object) => {
     }
 }
 
-const deleteFetch = async (url:string) => {
+const deleteFetch = async (url:string, jwt:string) => {
     try {
-        const resp = await fetch(url,{ mode: "cors", method:"DELETE", credentials:"same-origin"});
+        const resp = await fetch(url,{ mode: "cors", method:"DELETE", credentials:"same-origin",headers: {'Authorization':`Bearer ${jwt}`}});
         let json = await resp.json()
         return json
     } catch (e) {

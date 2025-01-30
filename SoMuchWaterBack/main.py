@@ -199,15 +199,18 @@ async def login_for_access_token(
 #  gestion base de donnée
 
 
-@app.post("/waterprint/")
-def create_product(waterprint: WaterPrint, session: SessionDep):
-    if name_exists(waterprint.name):
-        session.add(waterprint)
-        session.commit()
-        session.refresh(waterprint)
-        return waterprint
+@app.post("/waterprint/", response_model=Admin)
+def create_product(waterprint: WaterPrint, session: SessionDep, current_admin: Annotated[Admin, Depends(get_current_admin)]):
+    if current_admin:
+        if name_exists(waterprint.name):
+            session.add(waterprint)
+            session.commit()
+            session.refresh(waterprint)
+            return waterprint
+        else:
+            return {"error": "Ce produit exists déjà"}
     else:
-        return {"error": "Ce produit exists déjà"}
+        return {"error": "acces denied"}
 
 
 @app.get("/waterprint/")
@@ -223,27 +226,33 @@ def read_product(waterprint_id: int, session: SessionDep):
         raise HTTPException(status_code=404, detail="Waterprint not found")
     return waterprint
 
-@app.patch("/waterprint/{waterprint_id}")
-def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep):
-    statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
-    res = session.exec(statm)
-    target = res.one()
-    target.name = waterprint.name
-    target.water_print = waterprint.water_print
-    target.quantité = waterprint.quantité
-    session.add(target)
-    session.commit()
-    session.refresh(target)
-    return target
+@app.patch("/waterprint/{waterprint_id}", response_model=Admin)
+def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep,current_admin: Annotated[Admin, Depends(get_current_admin)]):
+    if current_admin:
+        statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
+        res = session.exec(statm)
+        target = res.one()
+        target.name = waterprint.name
+        target.water_print = waterprint.water_print
+        target.quantité = waterprint.quantité
+        session.add(target)
+        session.commit()
+        session.refresh(target)
+        return target
+    else:
+        return {"error":"acces denied"}
 
-@app.delete("/waterprint/{waterprint_id}")
-def delete_product(waterprint_id: int, session: SessionDep):
-    statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
-    res = session.exec(statm)
-    target = res.one()
-    session.delete(target)
-    session.commit()
-    return {"message":"item supprimer"}
+@app.delete("/waterprint/{waterprint_id}", response_model=Admin)
+def delete_product(waterprint_id: int, session: SessionDep, current_admin: Annotated[Admin, Depends(get_current_admin)]):
+    if current_admin:
+        statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
+        res = session.exec(statm)
+        target = res.one()
+        session.delete(target)
+        session.commit()
+        return {"message":"item supprimer"}
+    else:
+        return {"error":"acces denied"}
 
 
 @app.get("/admin/guard/", response_model=Admin)
