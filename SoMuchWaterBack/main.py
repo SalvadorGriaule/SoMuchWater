@@ -235,7 +235,7 @@ def delete_product(waterprint_id: int, session: SessionDep):
     target = res.one()
     session.delete(target)
     session.commit()
-    return target
+    return {"message":"item supprimer"}
 
 
 @app.get("/admin/waterprint", response_model=Admin)
