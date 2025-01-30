@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from contextlib import asynccontextmanager
 import logging
+import sys
 
 import jwt
 from fastapi import FastAPI, Depends, HTTPException, status
@@ -118,30 +119,37 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
 
 async def get_current_admin(token: Annotated[str, Depends(oauth2_scheme)]):
-    credantials_exception = HTTPException(
+    credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credential",
+        detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithm=ALGORITHM)
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
         if email is None:
-            raise credantials_exception
-        token_data = TokenData(admin=email)
+            raise credentials_exception
+        token_data = TokenData(email=email)
     except InvalidTokenError:
-        raise credantials_exception
+        raise credentials_exception
     with Session(engine) as session:
         adminDB = session.exec(select(Admin)).all()
         admin = get_admin(adminDB, email=token_data.email)
         if admin is None:
-            raise credantials_exception
+            raise credentials_exception
         return admin
     
 app = FastAPI(lifespan=on_startup)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+stream_handler = logging.StreamHandler(sys.stdout)
+log_formatter = logging.Formatter("%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s")
+stream_handler.setFormatter(log_formatter)
+logger.addHandler(stream_handler)
+
+logger.info('Log mo, log moi')
 
 origins = {
     "http://localhost",
@@ -238,6 +246,6 @@ def delete_product(waterprint_id: int, session: SessionDep):
     return {"message":"item supprimer"}
 
 
-@app.get("/admin/waterprint", response_model=Admin)
-async def admin_product(current_admin: Annotated[Admin, Depends(get_current_admin)]):
+@app.get("/admin/guard/", response_model=Admin)
+async def admin_guard(current_admin: Annotated[Admin, Depends(get_current_admin)]):
     return current_admin
