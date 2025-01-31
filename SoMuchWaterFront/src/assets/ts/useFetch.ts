@@ -49,9 +49,9 @@ const useFetch = (url: string) => {
     return { data, error }
 }
 
-const jsonFetch = async (url: string, data: Object) => {
+const jsonFetch = async (url: string, data: Object, jwt: string) => {
     try {
-        const resp = await fetch(url, { mode: "cors", method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+        const resp = await fetch(url, { mode: "cors", method: "POST", headers: { "Content-Type": "application/json",'Authorization':`Bearer ${jwt}` }, body: JSON.stringify(data) })
         let json = await resp.json()
         return json
     } catch (e) {
@@ -59,9 +59,9 @@ const jsonFetch = async (url: string, data: Object) => {
     }
 }
 
-const deleteFetch = async (url:string, jwt:string) => {
+const deleteFetch = async (url: string, jwt: string) => {
     try {
-        const resp = await fetch(url,{ mode: "cors", method:"DELETE", credentials:"same-origin",headers: {'Authorization':`Bearer ${jwt}`}});
+        const resp = await fetch(url, { mode: "cors", method: "DELETE", credentials: "same-origin", headers: { 'Authorization': `Bearer ${jwt}` } });
         let json = await resp.json()
         return json
     } catch (e) {
@@ -69,9 +69,9 @@ const deleteFetch = async (url:string, jwt:string) => {
     }
 }
 
-const jsonPatch = async(url: string, data: Object) => {
+const jsonPatch = async (url: string, data: Object, jwt: string) => {
     try {
-        const resp = await fetch(url, { mode: "cors", method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+        const resp = await fetch(url, { mode: "cors", method: "PATCH", headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${jwt}` }, body: JSON.stringify(data) })
         let json = await resp.json()
         return json
     } catch (e) {
@@ -81,7 +81,7 @@ const jsonPatch = async(url: string, data: Object) => {
 
 const formFetch = async (url: string, form: FormData) => {
     try {
-        const resp = await fetch(url,{ mode: "cors", method:"POST", body: form})
+        const resp = await fetch(url, { mode: "cors", method: "POST", body: form })
         let json = await resp.json()
         return json
     } catch (e) {
@@ -89,4 +89,4 @@ const formFetch = async (url: string, form: FormData) => {
     }
 }
 
-export {formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData}
+export { formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData }

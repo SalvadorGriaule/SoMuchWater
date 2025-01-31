@@ -199,7 +199,7 @@ async def login_for_access_token(
 #  gestion base de donnée
 
 
-@app.post("/waterprint/", response_model=Admin)
+@app.post("/waterprint/")
 def create_product(waterprint: WaterPrint, session: SessionDep, current_admin: Annotated[Admin, Depends(get_current_admin)]):
     if current_admin:
         if name_exists(waterprint.name):
@@ -226,7 +226,7 @@ def read_product(waterprint_id: int, session: SessionDep):
         raise HTTPException(status_code=404, detail="Waterprint not found")
     return waterprint
 
-@app.patch("/waterprint/{waterprint_id}", response_model=Admin)
+@app.patch("/waterprint/{waterprint_id}")
 def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep,current_admin: Annotated[Admin, Depends(get_current_admin)]):
     if current_admin:
         statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
@@ -242,7 +242,7 @@ def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep,
     else:
         return {"error":"acces denied"}
 
-@app.delete("/waterprint/{waterprint_id}", response_model=Admin)
+@app.delete("/waterprint/{waterprint_id}")
 def delete_product(waterprint_id: int, session: SessionDep, current_admin: Annotated[Admin, Depends(get_current_admin)]):
     if current_admin:
         statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)

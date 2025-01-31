@@ -3,20 +3,21 @@
 import { ref, toValue, watch, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { jsonPatch, uniData } from './assets/ts/useFetch';
+import { cookies } from './assets/ts/guard';
 
 const router = useRouter();
 const route = useRoute();
 
-let data:Ref<Data|null> = ref(uniData("http://127.0.0.1:8000/waterprint/" + route.params.id))
+let data: Ref<Data | null> = ref(uniData("http://127.0.0.1:8000/waterprint/" + route.params.id))
 
 
-let name: Ref<string|undefined> = ref("")
-let waterprint: Ref<number|undefined> = ref(0);
-let quantité: Ref<string|undefined> = ref("")
+let name: Ref<string | undefined> = ref("")
+let waterprint: Ref<number | undefined> = ref(0);
+let quantité: Ref<string | undefined> = ref("")
 let error: Ref<string> = ref("")
 let state: Ref<boolean> = ref(false);
 
-watch(data,() => {
+watch(data, () => {
     name.value = data.value?.name;
     waterprint.value = data.value?.water_print;
     quantité.value = data.value?.quantité
@@ -24,12 +25,13 @@ watch(data,() => {
 
 const sendData = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
-    let json: Object = { "name": toValue(name), "water_print": toValue(waterprint), "quantité": toValue(quantité) }
-    console.log(json);
-    
-    let resp = await jsonPatch("http://127.0.0.1:8000/waterprint/" + route.params.id, json)
-    error.value = resp.error
-    state.value = true
+    let jwt: string = cookies.get("admin")
+    if (jwt) {
+        let json: Object = { "name": toValue(name), "water_print": toValue(waterprint), "quantité": toValue(quantité) }
+        let resp = await jsonPatch("http://127.0.0.1:8000/waterprint/" + route.params.id, json,jwt)
+        error.value = resp.error
+        state.value = true
+    }
 }
 
 </script>
