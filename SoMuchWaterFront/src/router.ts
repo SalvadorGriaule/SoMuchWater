@@ -13,12 +13,12 @@ const routes = [
     { path: '/', component: HomePage },
     { path: '/form', component: FormPage },
     { path: '/login', component: LoginPage },
-    { path: '/dashboard', component: DashBoard, beforeEnter (to, from) {
-        if(!isAdmin()) return {path : "/"}
-    }},{ path: '/item/:id', component: UpdatePage, beforeEnter (to, from) {
-        if(!isAdmin()) return {path : "/"}
-    }},{ path: '/item/delete/:id', component: DeletePage, beforeEnter (to, from) {
-        if(!isAdmin()) return {path : "/"}}}
+    { path: '/dashboard', component: DashBoard, async beforeEnter(to, from) {
+        if(!await isAdmin()) return {path : "/"}
+    }},{ path: '/item/:id', component: UpdatePage, async beforeEnter (to, from) {
+        if(!await isAdmin()) return {path : "/"}
+    }},{ path: '/item/delete/:id', component: DeletePage, async beforeEnter (to, from) {
+        if(!await isAdmin()) return {path : "/"}}}
 ]
 
 const router = createRouter({
