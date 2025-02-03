@@ -51,11 +51,21 @@ const useFetch = (url: string) => {
 
 const jsonFetch = async (url: string, data: Object, jwt: string) => {
     try {
-        const resp = await fetch(url, { mode: "cors", method: "POST", headers: { "Content-Type": "application/json",'Authorization':`Bearer ${jwt}` }, body: JSON.stringify(data) })
+        const resp = await fetch(url, { mode: "cors", method: "POST", headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${jwt}` }, body: JSON.stringify(data) })
         let json = await resp.json()
         return json
     } catch (e) {
         return e
+    }
+}
+
+const jwtCheck = async (jwt: string):Promise<boolean|Object> => {
+    try {
+        const resp = await fetch("http://127.0.0.1:8000/admin/guard", { mode: "cors",headers:{ "Content-Type": "application/json", "Authorization": `Bearer ${jwt}`} })
+        let json:Object = await resp.json();
+        return !json.hasOwnProperty("detail")
+    } catch (e) {
+        return {"error":e}
     }
 }
 
@@ -89,4 +99,4 @@ const formFetch = async (url: string, form: FormData) => {
     }
 }
 
-export { formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData }
+export { formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData ,jwtCheck}

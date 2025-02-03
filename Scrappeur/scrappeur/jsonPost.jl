@@ -7,7 +7,7 @@ mutable struct Waterprint
     litre::Int
 end
 
-adminPass = Dict("username" => "admin@astro.fr", "password" => "adinPass")
+adminPass = Dict("username" => "admin@astro.fr", "password" => "adminPass")
 
 if length(ARGS) == 1
     if isfile(ARGS)
