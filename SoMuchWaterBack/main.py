@@ -5,7 +5,7 @@ import logging
 import sys
 
 import jwt
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
@@ -23,7 +23,7 @@ class WaterPrint(SQLModel, table=True):
     name: str = Field(index=True)
     quantité: str = Field(index=True)
     water_print: int = Field(default=None, index=True)
-
+    path_img:int = Field(default=None, index=True)
 
 class Token(BaseModel):
     access_token: str
@@ -254,7 +254,13 @@ def delete_product(waterprint_id: int, session: SessionDep, current_admin: Annot
     else:
         return {"error":"acces denied"}
 
+# fileUploader
 
+@app.post("/uploadfile")
+async def image_upload(file: UploadFile):
+    return {"filename":file.filename}
+
+# vérification des jwt
 @app.get("/admin/guard/", response_model=Admin)
 async def admin_guard(current_admin: Annotated[Admin, Depends(get_current_admin)]):
     return current_admin
