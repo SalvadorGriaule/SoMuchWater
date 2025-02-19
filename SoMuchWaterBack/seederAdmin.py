@@ -13,6 +13,7 @@ def seed_admin():
 
 def main():
     seed_admin()
+    print("Admin crée")
 
 if __name__ == "__main__":
     main()

@@ -1,3 +1,4 @@
 demoenv
 .env
 __pycache__
+venv
