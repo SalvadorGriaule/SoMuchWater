@@ -3,7 +3,7 @@ from typing import Annotated
 from contextlib import asynccontextmanager
 import logging
 import sys
-
+# import lib
 import jwt
 from fastapi import FastAPI, Depends, HTTPException, status, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,6 +12,8 @@ from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 from sqlmodel import Field, Session, func, SQLModel, create_engine, select
 from pydantic import BaseModel
+
+from .externApi import externApi
 
 SECRET_KEY = "51e14729a14876cffb31272d914eb82e4e79f3112f15a0da5c89a1d7e42cbf12"
 ALGORITHM = "HS256"
@@ -23,7 +25,8 @@ class WaterPrint(SQLModel, table=True):
     name: str = Field(index=True)
     quantité: str = Field(index=True)
     water_print: int = Field(default=None, index=True)
-    path_img:int = Field(default=None, index=True)
+    path_img: str | None = Field(default=None, index=True)
+
 
 class Token(BaseModel):
     access_token: str
@@ -82,6 +85,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -138,18 +142,23 @@ async def get_current_admin(token: Annotated[str, Depends(oauth2_scheme)]):
         if admin is None:
             raise credentials_exception
         return admin
-    
+
+
 app = FastAPI(lifespan=on_startup)
+
+app.include_router(externApi.router)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 stream_handler = logging.StreamHandler(sys.stdout)
-log_formatter = logging.Formatter("%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s")
+log_formatter = logging.Formatter(
+    "%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s"
+)
 stream_handler.setFormatter(log_formatter)
 logger.addHandler(stream_handler)
 
-logger.info('Log mo, log moi')
+logger.info("Log mo, log moi")
 
 origins = {
     "http://localhost",
@@ -178,8 +187,7 @@ async def root():
 
 @app.post("/token")
 async def login_for_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    sesssion: SessionDep
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], sesssion: SessionDep
 ) -> Token:
     adminDB = sesssion.exec(select(Admin)).all()
     admin = authenticated_admin(adminDB, form_data.username, form_data.password)
@@ -200,7 +208,11 @@ async def login_for_access_token(
 
 
 @app.post("/waterprint/")
-def create_product(waterprint: WaterPrint, session: SessionDep, current_admin: Annotated[Admin, Depends(get_current_admin)]):
+def create_product(
+    waterprint: WaterPrint,
+    session: SessionDep,
+    current_admin: Annotated[Admin, Depends(get_current_admin)],
+):
     if current_admin:
         if name_exists(waterprint.name):
             session.add(waterprint)
@@ -226,8 +238,14 @@ def read_product(waterprint_id: int, session: SessionDep):
         raise HTTPException(status_code=404, detail="Waterprint not found")
     return waterprint
 
+
 @app.patch("/waterprint/{waterprint_id}")
-def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep,current_admin: Annotated[Admin, Depends(get_current_admin)]):
+def update_product(
+    waterprint_id: int,
+    waterprint: WaterPrint,
+    session: SessionDep,
+    current_admin: Annotated[Admin, Depends(get_current_admin)],
+):
     if current_admin:
         statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
         res = session.exec(statm)
@@ -240,25 +258,32 @@ def update_product(waterprint_id:int, waterprint:WaterPrint, session:SessionDep,
         session.refresh(target)
         return target
     else:
-        return {"error":"acces denied"}
+        return {"error": "acces denied"}
+
 
 @app.delete("/waterprint/{waterprint_id}")
-def delete_product(waterprint_id: int, session: SessionDep, current_admin: Annotated[Admin, Depends(get_current_admin)]):
+def delete_product(
+    waterprint_id: int,
+    session: SessionDep,
+    current_admin: Annotated[Admin, Depends(get_current_admin)],
+):
     if current_admin:
         statm = select(WaterPrint).where(WaterPrint.id == waterprint_id)
         res = session.exec(statm)
         target = res.one()
         session.delete(target)
         session.commit()
-        return {"message":"item supprimer"}
+        return {"message": "item supprimer"}
     else:
-        return {"error":"acces denied"}
+        return {"error": "acces denied"}
+
 
 # fileUploader
 
 @app.post("/uploadfile")
 async def image_upload(file: UploadFile):
-    return {"filename":file.filename}
+    return {"filename": file.filename}
+
 
 # vérification des jwt
 @app.get("/admin/guard/", response_model=Admin)

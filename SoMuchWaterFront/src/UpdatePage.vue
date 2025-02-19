@@ -1,7 +1,11 @@
 <script setup lang="ts">
 
+// import vue
 import { ref, toValue, watch, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+// import componante
+import ImageCenter from './components/ImageCenter.vue';
+// import ts
 import { jsonPatch, uniData } from './assets/ts/useFetch';
 import { cookies } from './assets/ts/guard';
 
@@ -9,7 +13,6 @@ const router = useRouter();
 const route = useRoute();
 
 let data: Ref<Data | null> = ref(uniData("http://127.0.0.1:8000/waterprint/" + route.params.id))
-
 
 let name: Ref<string | undefined> = ref("")
 let waterprint: Ref<number | undefined> = ref(0);
@@ -38,6 +41,7 @@ const sendData = async (e: { preventDefault: () => void; }) => {
 
 <template>
     <div class="flex flex-col items-center p-2">
+        <ImageCenter />
         <div v-if="state">
             <div v-if="error" class="p-2 mb-2 bg-red-400 border-red-600 border-solid border-2">
                 {{ error }}
