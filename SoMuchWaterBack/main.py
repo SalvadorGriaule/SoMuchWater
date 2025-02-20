@@ -3,22 +3,26 @@ from typing import Annotated
 from contextlib import asynccontextmanager
 import logging
 import sys
+
 # import lib
 import jwt
 from fastapi import FastAPI, Depends, HTTPException, status, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jwt.exceptions import InvalidTokenError
+from fastapi.security import OAuth2PasswordRequestForm
 from passlib.context import CryptContext
-from sqlmodel import Field, Session, func, SQLModel, create_engine, select
+from sqlmodel import Field, Session, func, SQLModel, select
 from pydantic import BaseModel
 
+from .auth import (
+    Admin,
+    SECRET_KEY,
+    ALGORITHM,
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    get_admin,
+    get_current_admin,
+)
 from .externApi import externApi
-
-SECRET_KEY = "51e14729a14876cffb31272d914eb82e4e79f3112f15a0da5c89a1d7e42cbf12"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
-
+from .dependencies import engine
 
 class WaterPrint(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -31,23 +35,6 @@ class WaterPrint(SQLModel, table=True):
 class Token(BaseModel):
     access_token: str
     token_type: str
-
-
-class TokenData(BaseModel):
-    email: str | None = None
-
-
-class Admin(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    username: str = Field(index=True)
-    password: str = Field(index=True)
-
-
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
-
-connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, connect_args=connect_args)
 
 
 def create_db_and_tables():
@@ -83,8 +70,6 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -92,14 +77,6 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(password):
     return pwd_context.hash(password)
-
-
-def get_admin(db, email: str):
-    with Session(engine) as session:
-        statm = select(Admin).where(Admin.username == email)
-        resp = session.exec(statm).all()
-        if len(resp) == 1:
-            return resp[0]
 
 
 def authenticated_admin(db, email: str, password: str):
@@ -120,28 +97,6 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
-
-
-async def get_current_admin(token: Annotated[str, Depends(oauth2_scheme)]):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
-            raise credentials_exception
-        token_data = TokenData(email=email)
-    except InvalidTokenError:
-        raise credentials_exception
-    with Session(engine) as session:
-        adminDB = session.exec(select(Admin)).all()
-        admin = get_admin(adminDB, email=token_data.email)
-        if admin is None:
-            raise credentials_exception
-        return admin
 
 
 app = FastAPI(lifespan=on_startup)
@@ -280,10 +235,10 @@ def delete_product(
 
 # fileUploader
 
+
 @app.post("/uploadfile")
 async def image_upload(file: UploadFile):
     return {"filename": file.filename}
-
 
 # vérification des jwt
 @app.get("/admin/guard/", response_model=Admin)
