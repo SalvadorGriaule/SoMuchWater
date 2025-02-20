@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import Push from './components/Push.vue';
+
+</script>
+
 <template>
   <header class="bg-blue-800 h-36 flex justify-end items-center flex-col space-y-2 pb-2">
     <div>
@@ -7,6 +12,7 @@
   <main>
     <RouterView />
   </main>
+  <Push />
 </template>
 
 <style scoped></style>

@@ -4,6 +4,7 @@ import { computed, reactive, ref, type Ref } from 'vue';
 import { arrData } from './assets/ts/useFetch';
 import { useRoute, useRouter } from 'vue-router';
 import SearchEngine from './components/SearchEngine.vue';
+import StateWorker from './components/StateWorker.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -11,7 +12,6 @@ const route = useRoute();
 let listWP: Ref<Data[] | void> = ref(arrData("http://127.0.0.1:8000/waterprint/"))
 let inputSearch: Ref<string> = ref("")
 let result: Ref<boolean[]> = ref([])
-
 
 const dynaSearch = computed(() => {
     result
@@ -22,6 +22,7 @@ const dynaSearch = computed(() => {
 <template>
     <section class="w-full flex items-center flex-col pt-2 bg-slate-400">
         <h1 class="text-2xl font-semibold">DashBoard</h1>
+        <StateWorker />
         <SearchEngine :tab="listWP" v-model:input="inputSearch" @search="(e) => result = e" />
     </section>
     <section>
