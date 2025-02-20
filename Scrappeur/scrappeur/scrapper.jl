@@ -91,3 +91,9 @@ if length(ARGS) == 2
 else
     println("nombre d'argument invalide")
 end
+
+# CLIENT_ID=CBb20uZCcycK0QhtbP8trvqy4sTBkcCC1GMDF2QE
+# CLIENT_SECRET=C4FBDDNmt7Taqo2ZSS9GNBom1HpjGGIhXuoBjfty70vjRJvvXdvKcgnkfjiBoZoP93sHfD0hZlv9sT0Pd2h3H1sHRtkislwOres5b5I8BceHd2wweWebSDwoAhocggN3
+# SECRET_KEY=51e14729a14876cffb31272d914eb82e4e79f3112f15a0da5c89a1d7e42cbf12
+# ALGORITHM=HS256
+# ACCESS_TOKEN_EXPIRE_MINUTES=60

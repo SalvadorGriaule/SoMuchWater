@@ -6,7 +6,4 @@ onconnect = (e) => {
         const token = await openVerseAuth(e.data[0])
         port.postMessage(token)
     }
-    port.postMessage("init openVerseAuth")
 }
-
-// export default self

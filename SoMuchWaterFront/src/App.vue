@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import Push from './components/Push.vue';
 
+import { cookies } from './assets/ts/guard.ts';
+const authWorker = new SharedWorker(new URL('../assets/ts/openVerseWorker.ts', import.meta.url), { type: "module" })
+
+authWorker.port.start()
+
+authWorker.port.onmessage = (e) => {
+  console.log(e.data)
+  cookies.set("tokenOV", e.data)
+}
+
 </script>
 
 <template>
