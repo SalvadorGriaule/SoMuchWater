@@ -2,13 +2,13 @@
 import Cookies from 'universal-cookie';
 import { openVerseSearch } from '@/assets/ts/openVerse';
 
-defineProps<{ name: string }>()
+const props = defineProps<{ name: string }>()
 
 const cookies = new Cookies(null, { path: '/' });
 
 const tokenOV = cookies.get("openVerseToken");
 
-if (tokenOV) openVerseSearch(tokenOV, "")
+if (tokenOV) openVerseSearch(tokenOV, props.name)
 
 </script>
 
