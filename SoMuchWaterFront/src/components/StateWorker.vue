@@ -3,11 +3,14 @@ import { cookies } from '../assets/ts/guard.ts';
 
 const bcAuth = new BroadcastChannel("authChannel")
 
-const testOVAWorker = () => {
+let initTest: boolean = false
 
-    bcAuth.onmessage = (e) => {
-        console.log(e.data)
-        cookies.set("openVerseToken",e.data);
+const testOVAWorker = () => {
+    if (!initTest) {
+        initTest = true
+        bcAuth.onmessage = (e) => {
+            cookies.set("openVerseToken", e.data);
+        }
     }
 
     bcAuth.postMessage([cookies.get("admin")])

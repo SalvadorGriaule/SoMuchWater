@@ -11,11 +11,9 @@ const authWorker = new Worker(new URL('./assets/ts/openVerseWorker.ts', import.m
   </header>
   <main>
     <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <keep-alive>
-          <component :is="Component" />
-        </keep-alive>
-      </transition>
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
     </router-view>
   </main>
   <Push />
