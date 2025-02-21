@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter, type RouteLocationNormalizedGeneric, type RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 import FormPage from './FormPage.vue'
 import HomePage from './HomePage.vue'
@@ -13,11 +13,11 @@ const routes = [
     { path: '/', component: HomePage },
     { path: '/form', component: FormPage },
     { path: '/login', component: LoginPage },
-    { path: '/dashboard', component: DashBoard, async beforeEnter(to, from) {
+    { path: '/dashboard', component: DashBoard, async beforeEnter(to:RouteLocationNormalizedGeneric, from:RouteLocationNormalizedLoadedGeneric) {
         if(!await isAdmin()) return {path : "/"}
-    }},{ path: '/item/:id', component: UpdatePage, async beforeEnter (to, from) {
+    }},{ path: '/item/:id', component: UpdatePage, async beforeEnter (to:RouteLocationNormalizedGeneric, from:RouteLocationNormalizedLoadedGeneric) {
         if(!await isAdmin()) return {path : "/"}
-    }},{ path: '/item/delete/:id', component: DeletePage, async beforeEnter (to, from) {
+    }},{ path: '/item/delete/:id', component: DeletePage, async beforeEnter (to:RouteLocationNormalizedGeneric, from:RouteLocationNormalizedLoadedGeneric) {
         if(!await isAdmin()) return {path : "/"}}}
 ]
 

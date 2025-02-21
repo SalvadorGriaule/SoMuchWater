@@ -1,9 +1,9 @@
 import { openVerseAuth } from "./openVerse.ts";
 
-onconnect = (e) => {
-    let port = e.ports[0];
-    port.onmessage = async (e) => {
-        const token = await openVerseAuth(e.data[0])
-        port.postMessage(token)
-    }
+const bcAuth = new BroadcastChannel("authChannel")
+
+bcAuth.onmessage = async (e:any) => {
+    const token = await openVerseAuth(e.data[0])
+    bcAuth.postMessage(token)
 }
+

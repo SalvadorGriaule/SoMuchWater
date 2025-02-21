@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { cookies } from '../assets/ts/guard.ts';
-const authWorker = new SharedWorker(new URL('../assets/ts/openVerseWorker.ts', import.meta.url), { type: "module" })
+
+const bcAuth = new BroadcastChannel("authChannel")
 
 const testOVAWorker = () => {
-    authWorker.port.start()
 
-    authWorker.port.onmessage = (e) => {
+    bcAuth.onmessage = (e) => {
         console.log(e.data)
+        cookies.set("openVerseToken",e.data);
     }
 
-    authWorker.port.postMessage([cookies.get("admin")])
+    bcAuth.postMessage([cookies.get("admin")])
 }
 
 </script>

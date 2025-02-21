@@ -1,16 +1,6 @@
 <script setup lang="ts">
 import Push from './components/Push.vue';
-
-import { cookies } from './assets/ts/guard.ts';
-const authWorker = new SharedWorker(new URL('../assets/ts/openVerseWorker.ts', import.meta.url), { type: "module" })
-
-authWorker.port.start()
-
-authWorker.port.onmessage = (e) => {
-  console.log(e.data)
-  cookies.set("tokenOV", e.data)
-}
-
+const authWorker = new Worker(new URL('./assets/ts/openVerseWorker.ts', import.meta.url), { type: "module" })
 </script>
 
 <template>
@@ -20,7 +10,13 @@ authWorker.port.onmessage = (e) => {
     </div>
   </header>
   <main>
-    <RouterView />
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
   </main>
   <Push />
 </template>

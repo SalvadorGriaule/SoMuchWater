@@ -7,8 +7,7 @@ import Cookies from 'universal-cookie';
 
 const router = useRouter();
 const route = useRoute();
-const cookies:Cookies = new Cookies(null, {path: '/'});
-const authWorker = new SharedWorker(new URL('../assets/ts/openVerseWorker.ts', import.meta.url), { type: "module" })
+const cookies: Cookies = new Cookies(null, { path: '/' });
 
 
 let email: Ref<string> = ref("");
@@ -26,9 +25,7 @@ const sendForm = async (e: { preventDefault: () => void; }) => {
     error.value = send.detail
     state.value = true
     if (!error.value) {
-        authWorker.port.start()
-        cookies.set("admin",send.access_token)
-        authWorker.port.postMessage([cookies.get("admin")])
+        cookies.set("admin", send.access_token)
         router.push("/dashboard")
     }
 }

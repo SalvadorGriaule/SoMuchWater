@@ -120,6 +120,7 @@ origins = {
     "http://localhost:8080",
     "http://localhost:5173",
     "http://localhost:5174",
+    "http://localhost:4173",
     "file:///home/salvadorgriaule/Bureau/Projet%20Web/FastApi/SoMuchWater/SoMuchWaterFront/dist/index.html",
 }
 
@@ -241,6 +242,6 @@ async def image_upload(file: UploadFile):
     return {"filename": file.filename}
 
 # vérification des jwt
-@app.get("/admin/guard/", response_model=Admin)
+@app.get("/admin/guard/", response_model=Admin, status_code=200)
 async def admin_guard(current_admin: Annotated[Admin, Depends(get_current_admin)]):
     return current_admin
