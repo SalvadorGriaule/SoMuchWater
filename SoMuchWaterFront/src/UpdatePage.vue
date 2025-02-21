@@ -41,7 +41,7 @@ const sendData = async (e: { preventDefault: () => void; }) => {
 
 <template>
     <div class="flex flex-col items-center p-2">
-        <ImageCenter />
+        <ImageCenter v-if="name" :name="name"/>
         <div v-if="state">
             <div v-if="error" class="p-2 mb-2 bg-red-400 border-red-600 border-solid border-2">
                 {{ error }}

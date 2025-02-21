@@ -9,7 +9,7 @@ const testOVAWorker = () => {
     if (!initTest) {
         initTest = true
         bcAuth.onmessage = (e) => {
-            cookies.set("openVerseToken", e.data);
+            cookies.set("openVerseToken", e.data.response);
         }
     }
 

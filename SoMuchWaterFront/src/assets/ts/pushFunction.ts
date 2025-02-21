@@ -1,7 +1,7 @@
 const initPush = (toast: HTMLDivElement, diode: HTMLSpanElement) => {
     diode.classList.add('animate-ping');
     diode.classList.add('bg-yellow-500');
-    toast.classList.remove("translate-y-[120%]");
+    toast.classList.remove("translate-y-[150%]");
 }
 
 const validPush = (toast: HTMLDivElement, diode: HTMLSpanElement) => {
@@ -9,8 +9,8 @@ const validPush = (toast: HTMLDivElement, diode: HTMLSpanElement) => {
     diode.classList.remove("bg-yellow-500")
     diode.classList.add("bg-sky-500")
     setTimeout(() => {
-        toast.classList.add("translate-y-[120%]")
-    },1200)
+        toast.classList.add("translate-y-[150%]")
+    },2400)
 }
 
 export { validPush , initPush }
