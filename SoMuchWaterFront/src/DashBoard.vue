@@ -30,25 +30,26 @@ const dynaSearch = computed(() => {
         <StateWorker />
         <SearchEngine :tab="listWP" v-model:input="inputSearch" @search="(e) => result = e" />
     </section>
-    <section>
-        <ul>
-            <li v-for="(elem, index) in listWP" :class="result[index] ? '' : 'hidden'">
-                <div class="flex flex-col items-center" :class="(index % 2 == 0 ? 'bg-blue-300' : 'bg-blue-400')">
-                    <p class="text-center p-1">
-                        {{ elem.name }} consomme {{ elem.water_print }} Litre d'eau pour {{ elem.quantité }} produit
-                    </p>
-                    <div>
-                        <a class="w-full" :href="'/item/' + elem.id">
-                            <input type="button" value="MODIFIER"
-                                class="p-2 text-white bg-green-700 rounded-md my-2 mr-1 cursor-pointer">
-                        </a>
-                        <a class="w-full" :href="'/item/delete/' + elem.id">
-                            <input type="button" value="SUPPRIMER"
-                                class="p-2 text-white bg-red-700 rounded-md my-2 mr-1 cursor-pointer">
-                        </a>
-                    </div>
+    <section class="flex flex-wrap m-2 justify-center">
+        <div class="w-64 h-[33vh] my-2 mx-3 border-2 border-blue-700 rounded-md overflow-hidden" v-for="(elem, index) in listWP">
+            <div class="h-1/2 overflow-hidden">
+                <img :src="elem.path_img == null ? '/src/assets/Placeholder.svg': elem.path_img" :alt="elem.path_img == null ? 'placeholder' : elem.name">
+            </div>
+            <div class="flex flex-col h-1/2 bg-blue-300 p-2">
+                <p>{{ elem.name }}</p>
+                <p>Quantité d'eau {{ elem.water_print }} L</p>
+                <p>Quantité produit {{ elem.quantité }}</p>
+                <div>
+                    <a class="w-full" :href="'/item/' + elem.id">
+                        <input type="button" value="MODIFIER"
+                            class="p-2 text-white bg-green-700 rounded-md my-2 mr-1 cursor-pointer">
+                    </a>
+                    <a class="w-full" :href="'/item/delete/' + elem.id">
+                        <input type="button" value="SUPPRIMER"
+                            class="p-2 text-white bg-red-700 rounded-md my-2 mr-1 cursor-pointer">
+                    </a>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </section>
 </template>

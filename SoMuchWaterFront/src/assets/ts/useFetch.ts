@@ -15,7 +15,7 @@ const arrData = (url: string): Ref<Data[]> | void => {
 }
 
 const uniData = (url: string): Ref<Data> => {
-    let resp: Ref<Data> = ref({ id: 0, name: "", water_print: 0, quantité: "" })
+    let resp: Ref<Data> = ref({ id: 0, name: "", water_print: 0, quantité: "" ,path_img: ""})
 
     let { data: select, error: sError } = useFetch(url)
     watch(select, async () => {

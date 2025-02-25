@@ -5,6 +5,8 @@ import { ref, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
 
 const props = defineProps<{ name: string }>()
 
+const emit = defineEmits(["urlImg"])
+
 const cookies = new Cookies(null, { path: '/' });
 
 const tokenOV = cookies.get("openVerseToken");
@@ -17,12 +19,14 @@ let resultSearch: Ref<OpenVerseResult | Object> = ref({});
 
 const incre = () => {
     if(currentImg.value < resultSearch.value.results.length - 1) currentImg.value++
-    console.log();
-    
 }
 
 const decrem = () => {
     if(currentImg.value > 0) currentImg.value--
+}
+
+const clickImg = (num:number) => {
+    currentImg.value = num;
 }
 
 if (tokenOV) {
@@ -30,6 +34,8 @@ if (tokenOV) {
         resultSearch.value = await openVerseSearch(tokenOV, props.name)
         if (resultSearch.value.hasOwnProperty("results") && img.value) {
             img.value.src = resultSearch.value.results[0].url
+            img.value.alt = resultSearch.value.results[0].title
+            emit("urlImg", img.value.src)
         }
     })
 }
@@ -37,8 +43,12 @@ if (tokenOV) {
 watch(currentImg,() => {
     if(img.value){
         img.value.src = resultSearch.value.results[currentImg.value].url
+        img.value.alt = resultSearch.value.results[currentImg.value].title
+        emit("urlImg", img.value.src)
     }
 })
+
+
 
 </script>
 
@@ -54,7 +64,7 @@ watch(currentImg,() => {
     <div class="flex w-full flex-col items-center mt-2 lg:flex-row-reverse">
         <div class="w-full flex justify-center items-center my-4">
             <div class="flex flex-col items-center">
-                <div class="flex items-center justify-around lg:justify-center">
+                <div class="flex items-center justify-around lg:justify-center h-[50vh] overflow-hidden">
                     <div
                         @click="decrem"
                         class="duration-100 w-1/6 bg-sky-300/50 rounded-full md:w-[12.5%] lg:w-[6.5%] hover:-translate-x-2">
@@ -73,9 +83,9 @@ watch(currentImg,() => {
         </div>
         <div v-if="resultSearch.hasOwnProperty('results')"
             class="flex items-center bg-sky-300 p-2 rounded-lg border-blue-500 border-2 mx-2 mb-2 overflow-x-scroll w-full lg:justify-start  lg:flex-wrap lg:h-[50vh] lg:mx-0">
-            <div class="h-40 flex-none flex items-center overflow-hidden m-1" :class="i == currentImg ? 'bg-blue-500' : ''" v-for="(elem, i) in resultSearch.results" >
+            <div class="h-40 flex-none flex items-center overflow-hidden m-1" @click="clickImg(i)" :class="i == currentImg ? 'bg-blue-500' : ''" v-for="(elem, i) in resultSearch.results" >
                 <div  class="w-32 h-fit p-1" >
-                    <img :src="elem.url" alt="">
+                    <img :src="elem.url" alt="" draggable="false">
                 </div>
             </div>
         </div>

@@ -209,6 +209,7 @@ def update_product(
         target.name = waterprint.name
         target.water_print = waterprint.water_print
         target.quantité = waterprint.quantité
+        target.path_img = waterprint.path_img
         session.add(target)
         session.commit()
         session.refresh(target)
