@@ -5,16 +5,8 @@ interface OpenVerseToken {
     token_type: string
 }
 
-interface OpenVerseResult {
-    result_count:number;
-    page_count:number;
-    page_size:number;
-    page:number;
-    result:any[];
-    warnings:any[];
-}
 
-export const openVerseAuth = async (jwt: string): Promise<string | Object> => {
+const openVerseAuth = async (jwt: string): Promise<string | Object> => {
     try {
         const resp = await fetch("http://127.0.0.1:8000/api/openverse/token", { mode: "cors", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${jwt}` } })
         let json: OpenVerseToken = await resp.json()
@@ -28,7 +20,7 @@ export const openVerseAuth = async (jwt: string): Promise<string | Object> => {
     }
 }
 
-export const openVerseSearch = async (tokenOV: string, search: string): Promise<OpenVerseResult|Object> => {
+const openVerseSearch = async (tokenOV: string, search: string): Promise<OpenVerseResult|Object> => {
     search = search.replace(" ","+")
     try {
         const resp = await fetch(`https://api.openverse.org/v1/images/?q=${search}`, { mode: "cors", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${tokenOV}` } })
@@ -42,3 +34,6 @@ export const openVerseSearch = async (tokenOV: string, search: string): Promise<
         return { error: err }
     }
 }
+
+export type { OpenVerseToken }
+export { openVerseAuth ,openVerseSearch}
