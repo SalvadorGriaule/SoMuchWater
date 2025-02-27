@@ -49,6 +49,17 @@ const useFetch = (url: string) => {
     return { data, error }
 }
 
+const useFetchAsync = async (url:string) => {
+    let data: Data[]|Data|null = null
+    try {
+        const res = await fetch(url, { mode: 'cors', credentials: 'same-origin' });
+        data = await res.json()
+        return data
+    } catch (error) {
+        return {err :error}
+    }
+}
+
 const jsonFetch = async (url: string, data: Object, jwt: string) => {
     try {
         const resp = await fetch(url, { mode: "cors", method: "POST", headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${jwt}` }, body: JSON.stringify(data) })
@@ -99,4 +110,4 @@ const formFetch = async (url: string, form: FormData) => {
     }
 }
 
-export { formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData ,jwtCheck}
+export { formFetch, jsonFetch, jsonPatch, deleteFetch, arrData, uniData ,jwtCheck, useFetchAsync}

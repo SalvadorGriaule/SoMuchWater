@@ -8,6 +8,7 @@ import { validPush, initPush } from '@/assets/ts/pushFunction';
 
 const cookies = new Cookies(null, { path: '/' });
 const bcAuth = new BroadcastChannel("authChannel")
+const bcIFA = new BroadcastChannel("imgForAll");
 
 const push = useTemplateRef("push")
 const diode = useTemplateRef("diode")
@@ -20,6 +21,18 @@ bcAuth.onmessage = (e: any) => {
     } else if (e.data.state == "Succes") {
         cookies.set("openVerseToken", e.data.response);
         textPush.value = "openVerseToken getting";
+        if( push.value && diode.value ) validPush(push.value,diode.value)
+    }
+}
+
+bcIFA.onmessage = (e: any) => {
+    if (e.data == "start ImageForAll"){
+        if( push.value && diode.value ) initPush(push.value,diode.value)
+        textPush.value = e.data
+    } else if (e.data.includes("Fait sur")){
+        textPush.value = e.data
+    } else if (e.data == "bcIFA end its work") {
+        textPush.value = "bcIFA done"
         if( push.value && diode.value ) validPush(push.value,diode.value)
     }
 }
