@@ -42,6 +42,7 @@ const sendData = async (e: { preventDefault: () => void; }) => {
 </script>
 
 <template>
+    <a href="/dashboard"><button class="p-2 m-2 mb-2 bg-green-400 border-green-600 border-solid border-2">↵ retour au dashboard</button></a>
     <div class="flex flex-col items-center p-2">
         <ImageCenter v-if="name" :name="name" @url-img="(e) => { path_img = e }" />
         <div v-if="state">
