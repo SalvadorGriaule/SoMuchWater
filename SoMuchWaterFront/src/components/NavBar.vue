@@ -5,6 +5,8 @@ import { fillSVG } from '@/assets/ts/svgFunc';
 
 const props = defineProps<{ tab: string[] }>()
 
+const emit = defineEmits(["returnCurrent"])
+
 const currentOng: Ref<number> = ref(0);
 const navbar = useTemplateRef("navbar")
 
@@ -22,7 +24,7 @@ onMounted(() => {
     if(navbar.value){
         const onglet = navbar.value.querySelectorAll(".onglet")
         watch(currentOng,() => {
-            console.log(currentOng)
+            emit("returnCurrent",currentOng.value)
             for (let i = 0; i < onglet.length; i++){
                 currentOng.value == i ? fillSVG(onglet[i],"#7dd3fc") : fillSVG(onglet[i],"#3b82f6")
             }
@@ -37,7 +39,7 @@ onMounted(() => {
     <div ref="navbar" class="flex space-x-8 ml-[0.85rem]">
         <div v-for="(elem, i) in tab" class="relative flex justify-center items-center">
             <Onglet :fn="clickOng" :value="i" @call-back="(e) => { currentOng = e}" class="scale-x-125 scale-y-110"/>
-            <p @click="() => { currentOng = i }" class="absolute top-0 font-semibold text-gray-600">{{ elem }}</p>
+            <p @click="() => { currentOng = i }" class="absolute top-0 font-semibold text-gray-800">{{ elem }}</p>
         </div>
     </div>
 </template>

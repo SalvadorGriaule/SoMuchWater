@@ -2,7 +2,7 @@
 import Cookies from 'universal-cookie';
 import NavBar from './NavBar.vue';
 import { openVerseSearch } from '@/assets/ts/openVerse';
-import { ref, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
+import { computed, ref, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
 
 const props = defineProps<{ name: string }>()
 
@@ -14,7 +14,9 @@ const tokenOV = cookies.get("openVerseToken");
 
 const img = useTemplateRef('imgOV');
 
-let currentImg: Ref<number> = ref(0)
+let currentImg: Ref<number> = ref(0);
+
+let currentPage: Ref<number> = ref(0);
 
 let resultSearch: Ref<OpenVerseResult | Object> = ref({});
 
@@ -49,11 +51,21 @@ watch(currentImg, () => {
     }
 })
 
+ watch(currentPage, () => {
+     console.log(currentPage.value);
+    
+ })
 
-
+const turnPage = computed(() => {
+    currentPage
+})
 </script>
 
 <template>
+    <div>
+        {{ currentPage }}
+        <button @click="() => currentPage = 1">test</button>
+    </div>
     <div>
         <div v-if="tokenOV" class="p-2 bg-green-300 border-green-600 border-2 rounded-md text-green-600">
             <p class="font-semibold">tokenOV disponible</p>
@@ -81,11 +93,11 @@ watch(currentImg, () => {
             </div>
         </div>
         <div
-            class="flex items-center bg-sky-300 rounded-lg border-blue-500 border-2 mx-2 mb-2 overflow-x-scroll w-full lg:justify-start  lg:flex-wrap lg:h-[50vh] lg:mx-0">
+            class="flex items-center bg-sky-300 rounded-lg border-blue-500 border-2 mx-2 mb-2 overflow-hidden w-full lg:justify-start  lg:flex-wrap lg:h-[50vh] lg:mx-0">
             <div class="flex items-end w-full h-9 bg-white">
-                <NavBar :tab="['OpenVerse','Local']"/>
+                <NavBar :tab="['OpenVerse','Local']" @return-current="(e) => currentPage = e" />
             </div>
-            <div v-if="resultSearch.hasOwnProperty('results')"
+            <div v-if="resultSearch.hasOwnProperty('results') && currentPage == 0"
                 class="flex items-center bg-sky-300 p-2 mx-2 mb-2 overflow-x-scroll w-full lg:justify-start  lg:flex-wrap lg:h-[50vh] lg:mx-0">
                 <div v-for="(elem, i) in resultSearch.results"
                     class="h-40 flex-none flex items-center overflow-hidden m-1" @click="clickImg(i)"
@@ -98,6 +110,10 @@ watch(currentImg, () => {
                     <p>Pas d'image disponible</p>
                 </div>
             </div>
+            <div v-if="currentPage == 1" class="flex items-center bg-sky-300 p-2 mx-2 mb-2 overflow-x-scroll w-full lg:h-[50vh] lg:mx-0">
+                <div class="h-2/3"></div>
+                <div class="h-1/3 bg-black"></div>
+            </div>  
         </div>
     </div>
 </template>

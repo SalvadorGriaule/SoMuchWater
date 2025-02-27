@@ -23,7 +23,7 @@ const emit = defineEmits(["callBack"])
       </defs>
       <g inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1" transform="translate(-91.502932,-41.120578)">
          <path id="path2" @click="$emit('callBack', fn(value))"
-            style="fill:#616161;stroke:none;stroke-width:0.0525229;stroke-linecap:round;stroke-linejoin:round"
+            class="duration-150" style="fill:#616161;stroke:none;stroke-width:0.0525229;stroke-linecap:round;stroke-linejoin:round"
             inkscape:transform-center-x="0.0043007531" inkscape:transform-center-y="-0.80718251"
             d="m 121.23141,49.297758 -29.72848,-0.0025 2.52961,-6.484572 a 2.6549976,2.6549976 145.65836 0 1 2.473744,-1.690109 l 19.739596,0.0021 a 2.6502171,2.6502171 34.402014 0 1 2.47054,1.691743 z"
             sodipodi:nodetypes="ccccc" inkscape:path-effect="#path-effect4"
