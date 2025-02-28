@@ -53,11 +53,9 @@ onMounted(() => {
             standBy.value.classList.toggle("hidden");
         });
         dropzone.on("dragenter", (e) => {
-            console.log(e.target);
             if (standBy.value == e.target) dragOver.value = 1;
         })
         dropzone.on("dragleave", (e) => {
-            console.log(e.target);
             if (feedBack.value == e.target) dragOver.value = 0;
         })
         document.addEventListener("formdata", (e) => {
