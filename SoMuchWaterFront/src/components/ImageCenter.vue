@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import Cookies from 'universal-cookie';
 import NavBar from './NavBar.vue';
+import UploadPage from './UploadPage.vue';
 import { openVerseSearch } from '@/assets/ts/openVerse';
-import { computed, ref, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
+import { ref, useTemplateRef, watch, watchEffect, type Ref } from 'vue';
 
 const props = defineProps<{ name: string }>()
 
@@ -51,21 +52,9 @@ watch(currentImg, () => {
     }
 })
 
- watch(currentPage, () => {
-     console.log(currentPage.value);
-    
- })
-
-const turnPage = computed(() => {
-    currentPage
-})
 </script>
 
 <template>
-    <div>
-        {{ currentPage }}
-        <button @click="() => currentPage = 1">test</button>
-    </div>
     <div>
         <div v-if="tokenOV" class="p-2 bg-green-300 border-green-600 border-2 rounded-md text-green-600">
             <p class="font-semibold">tokenOV disponible</p>
@@ -111,8 +100,7 @@ const turnPage = computed(() => {
                 </div>
             </div>
             <div v-if="currentPage == 1" class="flex items-center bg-sky-300 p-2 mx-2 mb-2 overflow-x-scroll w-full lg:h-[50vh] lg:mx-0">
-                <div class="h-2/3"></div>
-                <div class="h-1/3 bg-black"></div>
+               <UploadPage />
             </div>  
         </div>
     </div>
