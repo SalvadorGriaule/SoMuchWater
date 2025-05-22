@@ -9,14 +9,12 @@ const insertIMG = async (token: string, elem: Data, jwt: string) => {
     if (firstImg.hasOwnProperty("result_count")) {
         if (firstImg.results[0]) elem.path_img = firstImg.results[0].url;
         let patch = await jsonPatch("http://127.0.0.1:8000/waterprint/" + elem.id, elem, jwt);
-        console.log(patch)
     }
 }
 
 bcIFA.onmessage = async (e: any) => {
     bcIFA.postMessage("start ImageForAll");
     let tabElem = await useFetchAsync("http://127.0.0.1:8000/waterprint/");
-    console.log(tabElem)
     if (tabElem && Array.isArray(tabElem)) {
         bcIFA.postMessage(`Fait sur 0/${tabElem.length} item`)
         for (let i = 0; i < tabElem.length; i++) {

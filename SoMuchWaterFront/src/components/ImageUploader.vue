@@ -7,10 +7,12 @@ const standBy = useTemplateRef("standBy");
 const imgUpload = useTemplateRef("imgUpload")
 const feedBack = useTemplateRef("feedback")
 
+const emit = defineEmits(['ifUpload'])
 
 let img_post: File;
 let data: string | null | undefined;
 let url: string = window.location.host;
+
 const upload: Function = (form_data: FormData) => {
     form_data.append("image", img_post);
 };
@@ -47,10 +49,12 @@ onMounted(() => {
             standBy.value.classList.toggle("flex");
             standBy.value.classList.toggle("hidden");
             img_post = file;
+            emit('ifUpload', false)
         });
         dropzone.on("removedfile", () => {
             standBy.value.classList.toggle("flex");
             standBy.value.classList.toggle("hidden");
+            emit('ifUpload', true)
         });
         dropzone.on("dragenter", (e) => {
             if (standBy.value == e.target) dragOver.value = 1;
