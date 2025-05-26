@@ -2,6 +2,7 @@
 import { arrData, uniData } from './assets/ts/useFetch';
 import { useRoute, useRouter } from 'vue-router';
 import SelectItem from './components/SelectItem.vue'
+import Listing from './components/Listing.vue'
 import { computed, ref, watch, type Ref } from 'vue';
 
 const router = useRouter();
@@ -49,13 +50,7 @@ const compareWP = computed(() => {
             </div>
         </div>
     </section>
-    <section>
-        <ul>
-            <li v-for="(elem, index) in data">
-                <p class="text-center p-1" :class="(index % 2 == 0 ? 'bg-blue-300' : 'bg-blue-400')">
-                    {{ elem.name }} consomme {{ elem.water_print }} Litre d'eau pour {{ elem.quantité }} produit
-                </p>
-            </li>
-        </ul>
+    <section class="flex flex-wrap m-2 justify-center">
+       <Listing :list="data" role="guest" />
     </section>
 </template>

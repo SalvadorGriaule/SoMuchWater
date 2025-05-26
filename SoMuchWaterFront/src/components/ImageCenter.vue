@@ -82,7 +82,7 @@ watch(currentImg, () => {
             </div>
         </div>
         <div
-            class="flex items-center bg-sky-300 rounded-lg border-blue-500 border-2 mx-2 mb-2 overflow-hidden w-full lg:justify-start  lg:flex-wrap lg:h-[50vh] lg:mx-0">
+            class="flex flex-col items-center bg-sky-300 rounded-lg border-blue-500 border-2 mx-2 mb-2 overflow-hidden w-full lg:flex-row lg:justify-start  lg:flex-wrap lg:h-[50vh] lg:mx-0">
             <div class="flex items-end w-full h-9 bg-white">
                 <NavBar :tab="['OpenVerse','Local']" @return-current="(e) => currentPage = e" />
             </div>
