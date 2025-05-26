@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { arrData, uniData } from './assets/ts/useFetch';
 import { useRoute, useRouter } from 'vue-router';
-import SelectItem from './components/SelectItem.vue'
+import SelectItem from './components/SelectItem.vue';
+import SearchEngine from './components/SearchEngine.vue';
 import Listing from './components/Listing.vue'
 import { computed, ref, watch, type Ref } from 'vue';
 
@@ -14,6 +15,10 @@ let select2: Ref<Data | null> = ref(null)
 let mainSelect = ref('')
 let mainSelect2 = ref('')
 
+// searchFonction
+let inputSearch: Ref<string> = ref("")
+let result: Ref<any[]> = ref([])
+
 watch(mainSelect, async () => {
     if (mainSelect.value != "") {
         select = uniData("http://127.0.0.1:8000/waterprint/" + mainSelect.value)
@@ -24,6 +29,10 @@ watch(mainSelect2, async () => {
     if (mainSelect2.value != "") {
         select2 = uniData("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)
     }
+})
+
+const dynaSearch = computed(() => {
+    result
 })
 
 const compareWP = computed(() => {
@@ -50,7 +59,11 @@ const compareWP = computed(() => {
             </div>
         </div>
     </section>
+    <section class="flex justify-center">
+        <SearchEngine :tab="data" v-model:input="inputSearch" @search="(e) => result = e" />
+    </section>
     <section class="flex flex-wrap m-2 justify-center">
-       <Listing :list="data" role="guest" />
+       <Listing v-if="inputSearch == '' " :list="data" role="guest" />
+       <Listing v-else :list="result" role="guest" />
     </section>
 </template>

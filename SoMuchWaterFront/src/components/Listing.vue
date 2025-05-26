@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="w-4/5 h-[33vh] my-2 mx-3 border-2 border-blue-700 rounded-md overflow-hidden lg:w-64" v-for="(elem, index) in list">
+    <div class="w-4/5 h-[33vh] my-2 mx-3 border-2 border-blue-700 rounded-md overflow-hidden md:w-64" v-for="(elem, index) in list">
         <div class="h-1/2 overflow-hidden">
             <img :src="elem.path_img == null ? '/src/assets/Placeholder.svg': elem.path_img" :alt="elem.path_img == null ? 'placeholder' : elem.name">
         </div>

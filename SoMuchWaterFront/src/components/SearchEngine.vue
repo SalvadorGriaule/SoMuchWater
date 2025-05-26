@@ -10,12 +10,11 @@ const props = defineProps<{
 
 const emit = defineEmits(["search"])
 
-const searchResult: boolean[] = new Array(props.tab?.length).fill(false)
-
 const isInclude = (str: string):boolean => {
     if (input.value != undefined) {
-
-        if (str.includes(input.value)) {
+        console.log(input.value);
+        
+        if (str.toLowerCase().includes(input.value.toLowerCase())) {
             return true
         } else {
             return false
@@ -25,11 +24,16 @@ const isInclude = (str: string):boolean => {
 }
 
 const searching = (tab: Data[] | undefined | void) => {
+    let j = 0;
+    let searchResult:Data[] = []
     if (Array.isArray(tab)) {
         for (let i = 0; tab.length > i; i++) {
-            searchResult[i] = isInclude(tab[i].name)
+            if (isInclude(tab[i].name)) {
+                searchResult[j] = tab[i]
+                j++
+            }
         }
-        console.log("emit")
+        console.log(searchResult)
         emit("search", searchResult)
     }
 }
@@ -38,5 +42,5 @@ const searching = (tab: Data[] | undefined | void) => {
 
 <template>
     <div><input class="placeholder:text-center border-2 border-black border-solid rounded-md my-2" type="text"
-            placeholder="Recherche" @keyup="searching(tab)" v-model="input"></div>
+            placeholder="Recherche" @keyup="(() => {searching(tab)})" v-model="input"></div>
 </template>
