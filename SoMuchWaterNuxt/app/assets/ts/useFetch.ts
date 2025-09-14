@@ -1,9 +1,9 @@
 import { ref, watchEffect, toValue, type Ref, watch } from 'vue'
 
-const arrData = (url: string): Ref<Data[]> | void => {
+const arrData = async (url: string): Promise<void | Ref<Data[], Data[]>> => {
     let resp: Ref<Data[]> = ref([])
 
-    let { data: select, error: sError } = useFetch(url)
+    let { data: select, error: sError } = await useFetch(url)
     watch(select, async () => {
         if (select.value != null && Array.isArray(select.value)) {
             resp.value = select.value
@@ -14,10 +14,10 @@ const arrData = (url: string): Ref<Data[]> | void => {
     return resp
 }
 
-const uniData = (url: string): Ref<Data> => {
+const uniData = async (url: string): Promise<Ref<Data, Data>> => {
     let resp: Ref<Data> = ref({ id: 0, name: "", water_print: 0, quantité: "" ,path_img: ""})
 
-    let { data: select, error: sError } = useFetch(url)
+    let { data: select, error: sError } = await useFetch(url)
     watch(select, async () => {
         if (select.value != null && !Array.isArray(select.value)) {
             resp.value = select.value
@@ -28,32 +28,11 @@ const uniData = (url: string): Ref<Data> => {
     return resp
 }
 
-const useFetch = (url: string) => {
-    const data: Ref<Data[] | Data | null> = ref(null);
-    const error: Ref<unknown | null> = ref(null);
-
-    watchEffect(async () => {
-        data.value = null;
-        error.value = null;
-
-        const urlValue = toValue(url);
-
-        try {
-            const res = await fetch(urlValue, { mode: 'cors', credentials: 'same-origin' });
-            data.value = await res.json();
-        } catch (e) {
-            error.value = e
-        }
-    })
-
-    return { data, error }
-}
-
 const useFetchAsync = async (url:string) => {
     let data: Data[]|Data|null = null
     try {
-        const res = await fetch(url, { mode: 'cors', credentials: 'same-origin' });
-        data = await res.json()
+        const res = await useFetch(url, { mode: 'cors', credentials: 'same-origin' });
+        data = res.data
         return data
     } catch (error) {
         return {err :error}
@@ -72,8 +51,8 @@ const jsonFetch = async (url: string, data: Object, jwt: string) => {
 
 const jwtCheck = async (jwt: string):Promise<boolean|Object> => {
     try {
-        const resp = await fetch("http://127.0.0.1:8000/admin/guard", { mode: "cors",headers:{ "Content-Type": "application/json", "Authorization": `Bearer ${jwt}`} })
-        let json:Object = await resp.json();
+        const resp = await useFetch("http://127.0.0.1:8000/admin/guard", { mode: "cors",headers:{ "Content-Type": "application/json", "Authorization": `Bearer ${jwt}`} })
+        let json:Object = resp.data;
         return !json.hasOwnProperty("detail")
     } catch (e) {
         return {"error":e}
@@ -82,8 +61,8 @@ const jwtCheck = async (jwt: string):Promise<boolean|Object> => {
 
 const deleteFetch = async (url: string, jwt: string) => {
     try {
-        const resp = await fetch(url, { mode: "cors", method: "DELETE", credentials: "same-origin", headers: { 'Authorization': `Bearer ${jwt}` } });
-        let json = await resp.json()
+        const resp = await useFetch(url, { mode: "cors", method: "DELETE", credentials: "same-origin", headers: { 'Authorization': `Bearer ${jwt}` } });
+        let json = resp.data
         return json
     } catch (e) {
         return e
@@ -92,8 +71,8 @@ const deleteFetch = async (url: string, jwt: string) => {
 
 const jsonPatch = async (url: string, data: Object, jwt: string) => {
     try {
-        const resp = await fetch(url, { mode: "cors", method: "PATCH", headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${jwt}` }, body: JSON.stringify(data) })
-        let json = await resp.json()
+        const resp = await useFetch(url, { mode: "cors", method: "PATCH", headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${jwt}` }, body: JSON.stringify(data) })
+        let json = resp.data
         return json
     } catch (e) {
         return e
@@ -102,8 +81,8 @@ const jsonPatch = async (url: string, data: Object, jwt: string) => {
 
 const formFetch = async (url: string, form: FormData) => {
     try {
-        const resp = await fetch(url, { mode: "cors", method: "POST", body: form })
-        let json = await resp.json()
+        const resp = await useFetch(url, { mode: "cors", method: "POST", body: form })
+        let json = resp.data
         return json
     } catch (e) {
         return e

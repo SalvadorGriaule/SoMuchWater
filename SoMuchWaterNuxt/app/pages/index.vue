@@ -8,7 +8,7 @@ import { computed, ref, watch, type Ref } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
-let data: Ref<Data[] | void> = ref(arrData("http://127.0.0.1:8000/waterprint/"))
+let data: Ref<Data[] | void> = await arrData("http://127.0.0.1:8000/waterprint/")
 let select: Ref<Data | null> = ref(null)
 let select2: Ref<Data | null> = ref(null)
 
@@ -21,13 +21,13 @@ let result: Ref<any[]> = ref([])
 
 watch(mainSelect, async () => {
     if (mainSelect.value != "") {
-        select = uniData("http://127.0.0.1:8000/waterprint/" + mainSelect.value)
+        select = await uniData("http://127.0.0.1:8000/waterprint/" + mainSelect.value)
     }
 })
 
 watch(mainSelect2, async () => {
     if (mainSelect2.value != "") {
-        select2 = uniData("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)
+        select2 = await uniData("http://127.0.0.1:8000/waterprint/" + mainSelect2.value)
     }
 })
 

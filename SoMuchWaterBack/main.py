@@ -117,6 +117,8 @@ logger.info("Log mo, log moi")
 
 origins = {
     "http://localhost",
+    "http://192.168.1.14:3000",
+    "http://localhost:3000",
     "http://localhost:8080",
     "http://localhost:5173",
     "http://localhost:5174",
