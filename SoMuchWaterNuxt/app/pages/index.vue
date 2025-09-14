@@ -8,7 +8,7 @@ import { computed, ref, watch, type Ref } from 'vue';
 
 const router = useRouter();
 const route = useRoute();
-let data: Ref<Data[] | void> = await arrData("http://127.0.0.1:8000/waterprint/")
+let data: void | Ref<Data[] | Data[]> = await arrData("http://127.0.0.1:8000/waterprint/")
 let select: Ref<Data | null> = ref(null)
 let select2: Ref<Data | null> = ref(null)
 

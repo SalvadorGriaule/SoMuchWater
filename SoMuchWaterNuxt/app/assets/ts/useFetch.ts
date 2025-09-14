@@ -1,31 +1,28 @@
 import { ref, watchEffect, toValue, type Ref, watch } from 'vue'
 
-const arrData = async (url: string): Promise<void | Ref<Data[], Data[]>> => {
-    let resp: Ref<Data[]> = ref([])
-
-    let { data: select, error: sError } = await useFetch(url)
-    watch(select, async () => {
-        if (select.value != null && Array.isArray(select.value)) {
-            resp.value = select.value
-        } else {
-            return console.log(sError)
-        }
-    })
-    return resp
+const isData = (data:any): data is Data => {
+    return "waterprint" in data
 }
 
-const uniData = async (url: string): Promise<Ref<Data, Data>> => {
-    let resp: Ref<Data> = ref({ id: 0, name: "", water_print: 0, quantité: "" ,path_img: ""})
-
+const arrData = async (url: string): Promise<void | Ref<Data[], Data[]>> => {
+    
     let { data: select, error: sError } = await useFetch(url)
-    watch(select, async () => {
-        if (select.value != null && !Array.isArray(select.value)) {
-            resp.value = select.value
-        } else {
-            return console.log(sError)
-        }
-    })
-    return resp
+    
+    // watch(select, async () => {
+    //     if (select.value != null && Array.isArray(select.value)) {
+    //         resp.value = select.value
+    //     } else {
+    //         return console.log(sError)
+    //     }
+    // })
+    return select.value != null && Array.isArray(select.value) ? select.value : console.log(sError);
+}
+
+const uniData = async (url: string): Promise<void | Ref<Data, Data>> => {
+    
+    let { data: select, error: sError } = await useFetch(url)
+    
+    return select.value != null && !Array.isArray(select.value) ? select.value : console.log(sError);
 }
 
 const useFetchAsync = async (url:string) => {
