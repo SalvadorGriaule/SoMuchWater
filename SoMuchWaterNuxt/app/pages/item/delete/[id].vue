@@ -3,7 +3,6 @@ definePageMeta({
     middleware: ['auth']
 })
 
-import { type Ref, ref } from 'vue';
 import { uniData, deleteFetch } from '../../../assets/ts/useFetch';
 
 const route = useRoute()

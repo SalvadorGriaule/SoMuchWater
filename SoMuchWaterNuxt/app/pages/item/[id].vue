@@ -3,8 +3,6 @@ definePageMeta({
     middleware: ['auth']
 })
 
-// import vue
-import { ref, toValue, watch, type Ref } from 'vue';
 // import componante
 import ImageCenter from '../../components/ImageCenter.vue';
 // import ts

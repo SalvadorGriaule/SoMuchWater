@@ -3,12 +3,10 @@ definePageMeta({
     middleware: ['auth']
 })
 
-import { computed, ref, type Ref } from 'vue';
 import { arrData } from '../assets/ts/useFetch';
 import SearchEngine from '../components/SearchEngine.vue';
 import StateWorker from '../components/StateWorker.vue';
 import Listing from '../components/Listing.vue'
-
 
 const bcAuth = new BroadcastChannel("authChannel")
 bcAuth.postMessage([useToken().value])
@@ -30,8 +28,8 @@ const dynaSearch = computed(() => {
         <SearchEngine :tab="listWP" v-model:input="inputSearch" @search="(e) => result = e" />
     </section>
     <section class="flex flex-wrap m-2 justify-center">
-       <Listing v-if="inputSearch == '' " :list="listWP" role="admin" />
-       <Listing v-else :list="result" role="admin" />
-          
+        <Listing v-if="inputSearch == ''" :list="listWP" role="admin" />
+        <Listing v-else :list="result" role="admin" />
+
     </section>
 </template>

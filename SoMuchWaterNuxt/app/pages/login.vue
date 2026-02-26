@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { ref, toValue, type Ref } from 'vue';
 import { formFetch } from '../assets/ts/useFetch';
 
 let email: Ref<string> = ref("");

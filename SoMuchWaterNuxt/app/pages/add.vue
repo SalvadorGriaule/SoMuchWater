@@ -4,7 +4,6 @@ definePageMeta({
 })
 
 import { jsonFetch } from '../assets/ts/useFetch';
-import { ref, toValue, type Ref } from 'vue';
 
 let name: Ref<string> = ref("")
 let waterprint: Ref<number> = ref(0);

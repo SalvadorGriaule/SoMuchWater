@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref, type ModelRef, type Ref } from 'vue';
+import { type ModelRef } from 'vue';
 
 const input: ModelRef<string | undefined> = defineModel('input')
 

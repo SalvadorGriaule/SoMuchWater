@@ -16,6 +16,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 return false
             }
         })
+        if(!check) return abortNavigation();
         return 
     } else {
         return abortNavigation();
