@@ -1,12 +1,10 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth']
+})
 
-import { useRoute, useRouter } from 'vue-router';
 import { jsonFetch } from '../assets/ts/useFetch';
 import { ref, toValue, type Ref } from 'vue';
-import { cookies } from '../assets/ts/guard';
-
-const router = useRouter();
-const route = useRoute();
 
 let name: Ref<string> = ref("")
 let waterprint: Ref<number> = ref(0);
@@ -16,7 +14,7 @@ let state: Ref<boolean> = ref(false);
 
 const sendData = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
-    let jwt:string = cookies.get("admin");
+    let jwt:string = useToken().value;
     if(jwt){
         let json: Object = { name: toValue(name), water_print: toValue(waterprint), quantité: toValue(quantité) }
         let resp = await jsonFetch("http://127.0.0.1:8000/waterprint/", json, jwt)

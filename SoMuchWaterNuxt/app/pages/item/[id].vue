@@ -1,16 +1,16 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth']
+})
 
 // import vue
 import { ref, toValue, watch, type Ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 // import componante
-import ImageCenter from '../components/ImageCenter.vue';
+import ImageCenter from '../../components/ImageCenter.vue';
 // import ts
-import { jsonPatch, uniData } from '../assets/ts/useFetch';
-import { cookies } from '../assets/ts/guard';
+import { jsonPatch, uniData } from '../../assets/ts/useFetch';
 
-const router = useRouter();
-const route = useRoute();
+const route = useRoute()
 
 let data: Ref<Data | null> = ref(uniData("http://127.0.0.1:8000/waterprint/" + route.params.id))
 

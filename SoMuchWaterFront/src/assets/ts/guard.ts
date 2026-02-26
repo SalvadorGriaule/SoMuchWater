@@ -1,24 +1,34 @@
-import Cookies from "universal-cookie"
 import { jwtCheck } from "../ts/useFetch"
 
-export const cookies: Cookies = new Cookies(document.cookie, { path: '/' })
+// Utilisation du composable useCookie de Nuxt
+export const useAdminCookie = () => useCookie<string | undefined>("admin", {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 jours (ajuste selon tes besoins)
+    secure: true,
+    sameSite: 'strict'
+})
 
 export const isAdmin = async (): Promise<boolean> => {
-    if (cookies.get("admin")) {
-        const jwt: string = cookies.get("admin");
-        const check = await jwtCheck(jwt).then((res) => {
-            if(typeof res == "boolean" ){
+    const adminCookie = useAdminCookie()
+    
+    if (adminCookie.value) {
+        const jwt: string = adminCookie.value
+        try {
+            const res = await jwtCheck(jwt)
+            
+            if (typeof res === "boolean") {
                 return res
-            } else if (typeof res == "object") {
+            } else if (typeof res === "object") {
                 console.log(res)
                 return false
             } else {
                 return false
             }
-        })
-        return check;
+        } catch (error) {
+            console.error("Erreur lors de la vérification JWT:", error)
+            return false
+        }
     } else {
-        return false;
+        return false
     }
 }
-

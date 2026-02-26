@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { cookies } from '../assets/ts/guard';
 
 const ifaWorker = new Worker(new URL('../assets/ts/imgForAllWorker.ts', import.meta.url), { type: "module" })
 
@@ -12,15 +11,15 @@ const testOVAWorker = () => {
     if (!initTest) {
         initTest = true
         bcAuth.onmessage = (e) => {
-            cookies.set("openVerseToken", e.data.response);
+            useTokenOV().value = e.data.response;
         }
     }
 
-    bcAuth.postMessage([cookies.get("admin")])
+    bcAuth.postMessage([useToken().value])
 }
 
 const testIFAWorker = () => {
-    bcIFA.postMessage([{ token: cookies.get("openVerseToken"), jwt: cookies.get("admin") }])
+    bcIFA.postMessage([{ token: useTokenOV().value, jwt: useToken().value }])
 }
 
 </script>

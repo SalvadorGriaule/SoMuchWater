@@ -1,12 +1,12 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth']
+})
 
 import { type Ref, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { uniData, deleteFetch } from '../assets/ts/useFetch';
-import { cookies } from '../assets/ts/guard';
+import { uniData, deleteFetch } from '../../../assets/ts/useFetch';
 
-const router = useRouter();
-const route = useRoute();
+const route = useRoute()
 
 let data: Ref<Data | null> = ref(uniData("http://127.0.0.1:8000/waterprint/" + route.params.id))
 let response: Ref<string> = ref("");
@@ -15,14 +15,14 @@ let state: Ref<boolean> = ref(false);
 
 
 const delConfime = async () => {
-    let jwt: string = cookies.get("admin")
+    let jwt: string = useToken().value
     if (jwt) {
         let resp = await deleteFetch("http://127.0.0.1:8000/waterprint/" + route.params.id,jwt);
         state.value = true
         error.value = resp.detail
         response.value = resp.message
         if (response.value) {
-            setTimeout(() => { router.push("/dashboard") }, 700)
+           // setTimeout(() => { redirect }, 700)
         }
     }
 }

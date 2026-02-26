@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { arrData, uniData } from '../assets/ts/useFetch';
-import { useRoute, useRouter } from 'vue-router';
 import SelectItem from '../components/SelectItem.vue';
 import SearchEngine from '../components/SearchEngine.vue';
 import Listing from '../components/Listing.vue'
 import { computed, ref, watch, type Ref } from 'vue';
 
-const router = useRouter();
-const route = useRoute();
+
 let data: void | Ref<Data[] | Data[]> = await arrData("http://127.0.0.1:8000/waterprint/")
 let select: Ref<Data | null> = ref(null)
 let select2: Ref<Data | null> = ref(null)

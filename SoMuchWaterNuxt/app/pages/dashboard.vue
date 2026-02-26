@@ -1,21 +1,19 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth']
+})
 
 import { computed, ref, type Ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import Cookies from 'universal-cookie';
 import { arrData } from '../assets/ts/useFetch';
 import SearchEngine from '../components/SearchEngine.vue';
 import StateWorker from '../components/StateWorker.vue';
 import Listing from '../components/Listing.vue'
 
-const router = useRouter();
-const route = useRoute();
-const cookies = new Cookies(null, { path: '/' });
 
 const bcAuth = new BroadcastChannel("authChannel")
-bcAuth.postMessage([cookies.get("admin")])
+bcAuth.postMessage([useToken().value])
 
-let listWP: Ref<Data[] | void> = ref(arrData("http://127.0.0.1:8000/waterprint/"))
+let listWP: void | Ref<Data[] | Data[]> = await arrData("http://127.0.0.1:8000/waterprint/")
 let inputSearch: Ref<string> = ref("")
 let result: Ref<any[]> = ref([])
 
