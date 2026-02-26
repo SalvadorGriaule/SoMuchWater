@@ -6,7 +6,12 @@ let email: Ref<string> = ref("");
 let password: Ref<string> = ref("");
 let error: Ref<string> = ref("")
 let state: Ref<boolean> = ref(false);
-
+const adminCookie = useCookie<string>("admin", {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 jours
+    secure: true,
+    sameSite: 'strict'
+})
 const sendForm = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     let formData: FormData = new FormData()
@@ -15,10 +20,10 @@ const sendForm = async (e: { preventDefault: () => void; }) => {
     let send = await formFetch("http://127.0.0.1:8000/token", formData);
     error.value = send.detail
     state.value = true
-    console.log(error.value,!error.value)
+    console.log(error.value, !error.value)
     if (!error.value) {
         useToken().value = send.access_token
-        console.log(useToken().value,send)
+        adminCookie.value = send.access_token
         await navigateTo('/dashboard')
     }
 }

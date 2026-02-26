@@ -1,12 +1,12 @@
 <script setup lang="ts">
-
-const ifaWorker = new Worker(new URL('../assets/ts/imgForAllWorker.ts', import.meta.url), { type: "module" })
-
 const bcAuth = new BroadcastChannel("authChannel");
 const bcIFA = new BroadcastChannel("imgForAll");
 
 let initTest: boolean = false
+const admineCookie = useCookie("admin")
+onMounted(async () => [
 
+])
 const testOVAWorker = () => {
     if (!initTest) {
         initTest = true
@@ -15,11 +15,11 @@ const testOVAWorker = () => {
         }
     }
 
-    bcAuth.postMessage([useToken().value])
+    bcAuth.postMessage([admineCookie.value])
 }
 
 const testIFAWorker = () => {
-    bcIFA.postMessage([{ token: useTokenOV().value, jwt: useToken().value }])
+    bcIFA.postMessage([{ token: useTokenOV().value, jwt: admineCookie.value }])
 }
 
 </script>

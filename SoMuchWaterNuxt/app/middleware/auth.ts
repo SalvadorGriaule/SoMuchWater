@@ -4,8 +4,9 @@ import { useToken } from "../composables/useToken";
 
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    if (useToken().value) {
-        const jwt: string = useToken().value;
+    const admineCookie = useCookie("admin")
+    if (admineCookie.value) {
+        const jwt: string = admineCookie.value;
         const check = await jwtCheck(jwt).then((res) => {
             if (typeof res == "boolean") {
                 return res
